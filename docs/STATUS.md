@@ -39,6 +39,6 @@ This file is the cross-session source of truth. Update it in the same commit as 
 
 ## Next 3 actions
 
-1. Run the positive control on development data (synthetic signal injected into development runs only) to test whether the null can detect a planted effect.
-2. Implement the code path for the protocol (target, lags, ridge, leave-one-date-out, block permutation) and a target-derivative test, all before any holdout access.
-3. Request a fresh independent review after items 1–2; the protocol may reach READY_AS_EXPLORATORY only with items 2–4 declared as assumptions and item 5 run.
+1. Owner decision on the question: the synthetic controls show wheel-specific and timing-specific claims are not identifiable (hidden confound 93%, delayed effect 65%, lead effect 80%). Choose a restricted predictive question or a different question.
+2. Owner decision on compute for calibration precision (500+ replicates, 1000 permutations). Current 40-replicate results have ±2.5% precision.
+3. Only after 1–2: fix the freeze blockers (motion reference, VolumeTiming convention, clock alignment, manifest) and request a fresh independent review.

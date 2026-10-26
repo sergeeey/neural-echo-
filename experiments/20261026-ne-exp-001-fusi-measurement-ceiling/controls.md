@@ -4,6 +4,7 @@
 - **Chance baseline:** predicting the training mean.
 - **Wheel-free nuisance:** eye movement and pupil size only. Whisking excluded (its sidecar defines it from wheel velocity).
 - **Motion-independent reference (required for any neural reading; currently NOT AVAILABLE):** no verified signal is free of brain blood flow and body motion. A large-vessel signal is not a motion-free reference. A registration motion regressor would use the target images and is forbidden. The static angiogram cannot give per-frame motion; a mask from it needs an unverified registration.
-- **Session-specificity check:** not used as an H0 test (it does not separate motion from coupling).
+- **Session-specificity check:** not used as an H0 test (it does not separate motion from real signal).
 - **Target-derivative check:** no regressor may be computed from the fUS target. Code review before freezing.
-- **Positive control:** none available in this dataset.
+- **Positive control:** no real positive control exists in this dataset. Synthetic known-effect injection (controls_results.json, scenario known_effect) is the only positive control, and it is optimistic because its kernel matches the model's lag form.
+- **Hidden-confound control (added after review):** an unmeasured arousal variable correlated with the wheel drives the synthetic signal. A positive detection here means the wheel gain can be produced by a confound the design cannot see.

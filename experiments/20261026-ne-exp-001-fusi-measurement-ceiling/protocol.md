@@ -22,14 +22,14 @@
 - Target: whole-slice mean of power-Doppler per frame (linear mean), then a linear detrend fitted to that run's own signal (unsupervised; no wheel or model information).
 - Frame times: VolumeTiming onsets as recorded. Frame window [onset, onset + 0.3 s].
 - **Edge trimming:** frames with missing physio at the start or end of a run are dropped (0 to 4 frames per run). An interior physio gap excludes the run. Verified: no interior gap in the 8 primary runs' physio.
-- **Interval gaps:** intervals above 0.45 s are masked. Samples within 6 s after each gap are not used as lagged predictors or targets. (ref04 has a 3.9 s gap; ref11 has seven gaps up to 0.93 s.)
+- **Interval gaps:** an onset interval above 0.45 s is a gap. The 6 s after each gap (20 frames) are masked. A row is removed if its target frame or any of its 21 lagged predictor frames falls in a masked segment, so the removed span around each gap is up to 12 s. (ref04 has a 3.9 s gap; ref11 has seven gaps up to 0.93 s.)
 - Clock alignment (declared assumption): wheel and eye/pupil zero both at their StartTime reference. Shift sensitivity: −2, −1, +1, +2 s applied to the wheel. The primary analysis uses shift 0.
 - Edge-frame rule: the first 20 frames (6 s lag window) are dropped from all fits and scores.
 
 ## Models
 
 - Predictor of interest: signed wheel velocity at lags 0 to 6 s (frame offsets), wheel leads the fUS signal.
-- Wheel-free nuisance: eye movement and pupil size, same lags. Pupil normalised by session median (per sidecar).
+- Wheel-free nuisance: eye movement and pupil size, same lags. Pupil is already normalised by the recording median (sidecar); no further normalisation is applied.
 - Ridge on standardised features. **alpha = 1.0, fixed.** Standardisation from training runs only.
 - Predictive distribution: Gaussian, mean from the model, variance = residual variance on training rows, separately per model.
 
@@ -43,8 +43,10 @@
 ## Null distribution
 
 - Block permutation of signed wheel velocity within each run, in 120 s blocks, 1000 permutations on the holdout procedure, seed 20261026.
-- Buffers: a 60 s exclusion on each side of any held-out block in within-run blocked evaluation; at leave-one-date-out fold boundaries, training frames within 60 s of a held-out run are removed.
-- Observed Δ is compared with the 95th percentile of permuted Δ.
+- Buffers: the 60 s buffer is **not** part of the primary leave-one-date-out procedure, because folds are whole runs and no training frame is adjacent to a held-out block. It applies only to a secondary within-run blocked evaluation, which is not run here.
+- Margin: observed Δ is compared with the 95th percentile of permuted Δ.
+- **Full detection rule (what a positive result means):** margin AND Δ > 0 on at least 5 of the 6 primary dates. Reports must give both parts.
+- Block permutation uses blocks of 400–799 frames (about 120–240 s): the remainder is merged into the last block, so no sample is left unpermuted.
 
 ## Final holdout procedure (one shot)
 
@@ -67,7 +69,7 @@ The synthetic positive and negative controls (`scripts/run_nex001_controls.py`, 
 
 ## Estimand direction (fixed)
 
-- Target: fUS. Predictor: wheel velocity. The study is a **neurovascular prediction / coupling audit**, not decoding of wheel activity. Wheel activity is not the target.
+- Target: fUS. Predictor: wheel velocity. The study is a **behaviour-to-fUS prediction audit** (no neural claim), not decoding of wheel activity. Wheel activity is not the target.
 
 ## Detectability (estimand-ops rule)
 

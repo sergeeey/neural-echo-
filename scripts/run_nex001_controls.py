@@ -1,19 +1,23 @@
-"""Synthetic positive and negative controls for NE-EXP-001, on the protocol's primary runs.
+"""Synthetic positive and negative controls for NE-EXP-001 on the protocol's primary runs.
 
 Inputs: the eligible development runs of sub-ALD002 (count-matched VolumeTiming, no holdout).
-Real wheel, eye and pupil series are used so regressor statistics are realistic. The fUS signal is
-simulated with known truth. The holdout run is excluded by name and never read.
+Real wheel, eye and pupil series are used, so regressor statistics are realistic. The fUS signal
+is simulated with known truth. The holdout run is excluded by name and never read.
 
-Procedure under test is the protocol's: frames within 6 s after a VolumeTiming interval gap are
-masked, leave-one-calendar-date-out, and a block-permutation null of the wheel (120 s blocks).
-Consistency criterion: Δ > 0 on at least 5 of the primary dates.
+Procedure under test is the protocol's: rows whose lag window or target falls within 6 s after a
+VolumeTiming interval gap are removed; leave-one-calendar-date-out; a block-permutation null of
+the wheel (blocks of about 120 s). Detection is the full rule: observed Δ above the null 95th
+percentile AND Δ > 0 on at least 5 of the primary dates.
 
-Scenarios (per replicate):
+Scenarios (per replicate; noise has unit variance, so the stated R² is the true R² in expectation):
   zero_effect          AR(1) noise, no effect                  -> false-positive rate
   ar_null_strong       AR(1), phi=0.99, no effect              -> calibration under strong memory
-  known_effect         wheel effect, R2 gain ~0.05 in truth    -> power
-  misaligned_effect    true effect delayed 2.1 s, protocol unchanged -> power loss only
-  correlated_nuisance  signal driven by eye only, wheel correlated with eye -> leakage check
+  known_effect         wheel effect, R² ~0.05 in truth         -> power
+  delayed_outside      wheel effect delayed 6 s (outside lags) -> power when the model cannot see it
+  lead_misalignment    wheel effect advanced 2.1 s             -> sensitivity to the wrong direction
+  eye_driven           signal driven by the measured eye only  -> nuisance adequacy
+  hidden_confound      signal driven by an UNMEASURED arousal correlated with the wheel (r~0.5)
+                       -> whether the wheel gains from a confound it cannot see
 
 Usage: uv run python scripts/run_nex001_controls.py [N_REPS] [N_PERM]
 """
@@ -48,9 +52,10 @@ N_PERM = int(sys.argv[2]) if len(sys.argv) > 2 else 50
 PHI_DEFAULT = 0.96
 PHI_STRONG = 0.99
 EFFECT_R2 = 0.05
-MISALIGN_FRAMES = 7  # 2.1 s at 0.3 s per frame
+SHIFT_ADVANCE = -7  # 2.1 s, wheel advanced relative to fUS
+SHIFT_OUTSIDE = 20  # 6 s, delay beyond the 0-6 s lag window
 GAP_S = 0.45
-MASK_FRAMES = N_LAGS  # 6 s after each gap
+MASK_FRAMES = 20  # 6 s after each gap, in frames
 MIN_CONSISTENT_DATES = 5  # of the primary development dates
 KERNEL = np.array([k**2 * np.exp(-k / 2.0) for k in range(N_LAGS)])
 KERNEL = KERNEL / KERNEL.sum()
@@ -58,8 +63,10 @@ SCENARIOS = [
     "zero_effect",
     "ar_null_strong",
     "known_effect",
-    "misaligned_effect",
-    "correlated_nuisance",
+    "delayed_outside",
+    "lead_misalignment",
+    "eye_driven",
+    "hidden_confound",
 ]
 
 
@@ -72,29 +79,14 @@ def _tsv(zf: zipfile.ZipFile, base: str, kind: str) -> tuple[dict, np.ndarray]:
     return side, data
 
 
-def _physio_frames(zf: zipfile.ZipFile, base: str, vt: np.ndarray) -> dict[str, np.ndarray]:
-    side_w, data_w = _tsv(zf, base, "wheel")
-    side_e, data_e = _tsv(zf, base, "eye")
-    return {
-        "wheel": window_mean(
-            data_w[:, side_w["Columns"].index("wheel_velocity")],
-            side_w["SamplingFrequency"],
-            side_w["StartTime"],
-            vt,
-        ),
-        "eye": window_mean(
-            data_e[:, side_e["Columns"].index("eye_movement")],
-            side_e["SamplingFrequency"],
-            side_e["StartTime"],
-            vt,
-        ),
-        "pupil": window_mean(
-            data_e[:, side_e["Columns"].index("pupil_size")],
-            side_e["SamplingFrequency"],
-            side_e["StartTime"],
-            vt,
-        ),
-    }
+def _column(zf: zipfile.ZipFile, base: str, kind: str, col: str, vt: np.ndarray) -> np.ndarray:
+    side, data = _tsv(zf, base, kind)
+    return window_mean(
+        data[:, side["Columns"].index(col)],
+        side["SamplingFrequency"],
+        side["StartTime"],
+        vt,
+    )
 
 
 def _trim(series: dict[str, np.ndarray], invalid: np.ndarray, name: str):
@@ -108,7 +100,7 @@ def _trim(series: dict[str, np.ndarray], invalid: np.ndarray, name: str):
 
 
 def read_primary_runs() -> tuple[list[dict], list[str]]:
-    """Return eligible runs (count-matched, not holdout) and the names excluded for mismatch."""
+    """Eligible runs (count-matched, not holdout) and the names excluded for count mismatch."""
     zf = zipfile.ZipFile(ZIP)
     lines = zf.read("sub-ALD002/sub-ALD002_scans.tsv").decode().splitlines()[1:]
     date_of: dict[str, str] = {}
@@ -125,16 +117,21 @@ def read_primary_runs() -> tuple[list[dict], list[str]]:
             zf.read(base + "_pwd.nii.gz"), 352
         )
         t = struct.unpack("<8h", head[40:56])[4]
-        vt_full = np.array(json.loads(zf.read(base + "_pwd.json"))["VolumeTiming"], dtype=float)
-        if len(vt_full) != t:
+        vt = np.array(json.loads(zf.read(base + "_pwd.json"))["VolumeTiming"], dtype=float)
+        if len(vt) != t:
             excluded.append(name)
             continue
-        vt = vt_full
         gaps = np.flatnonzero(np.diff(vt) > GAP_S)
         invalid = np.zeros(t, dtype=int)
         for g in gaps:
             invalid[g + 1 : g + 1 + MASK_FRAMES] = 1
-        series, invalid = _trim(_physio_frames(zf, base, vt), invalid, name)
+        series = {
+            "wheel": _column(zf, base, "wheel", "wheel_velocity", vt),
+            "eye": _column(zf, base, "eye", "eye_movement", vt),
+            # Pupil is already normalised by the recording median (sidecar); no further step.
+            "pupil": _column(zf, base, "eye", "pupil_size", vt),
+        }
+        series, invalid = _trim(series, invalid, name)
         runs.append(
             {
                 "name": name,
@@ -147,53 +144,72 @@ def read_primary_runs() -> tuple[list[dict], list[str]]:
     return runs, excluded
 
 
-def ar1(T: int, phi: float, rng: np.random.Generator) -> np.ndarray:
+def ar1_unit(T: int, phi: float, rng: np.random.Generator) -> np.ndarray:
+    """Stationary AR(1) scaled to unit marginal variance."""
     e = rng.normal(size=T)
     y = np.empty(T)
-    y[0] = e[0] / np.sqrt(1 - phi * phi)
+    y[0] = e[0]
     for t in range(1, T):
         y[t] = phi * y[t - 1] + e[t]
-    return y
+    return y * np.sqrt(1 - phi * phi)
+
+
+def shifted(x: np.ndarray, s: int) -> np.ndarray:
+    """Delay by s frames (s>0) or advance by -s frames (s<0), zero-filled."""
+    out = np.zeros_like(x)
+    if s > 0:
+        out[s:] = x[:-s]
+    elif s < 0:
+        out[:s] = x[-s:]
+    else:
+        out[:] = x
+    return out
 
 
 def causal_conv(x: np.ndarray, kernel: np.ndarray, shift: int = 0) -> np.ndarray:
+    base = shifted(x, shift)
     out = np.zeros_like(x)
     for k, h in enumerate(kernel):
-        s = k + shift
-        if s == 0:
-            out += h * x
-        else:
-            out[s:] += h * x[:-s]
+        out += h * shifted(base, k)
     return out
 
 
 def build_runs(runs: list[dict], ys: list[np.ndarray], wheels: list[np.ndarray]) -> list[RunDesign]:
-    """Lagged designs with gap-masked rows removed (rows need no invalid frame in their window)."""
+    """Lagged designs with gap-masked rows removed (a row is dropped if its window hits a gap)."""
     out = []
     for r, y, w in zip(runs, ys, wheels, strict=True):
         keep = np.convolve(r["invalid"], np.ones(N_LAGS, dtype=int), mode="valid") == 0
         Xn = np.hstack([lagged_matrix(r["eye"]), lagged_matrix(r["pupil"])])[keep]
         Xw = lagged_matrix(w)[keep]
-        yy = aligned_target(y)[keep]
-        out.append(RunDesign(X_nuis=Xn, X_wheel=Xw, y=yy, group=r["date"]))
+        out.append(RunDesign(X_nuis=Xn, X_wheel=Xw, y=aligned_target(y)[keep], group=r["date"]))
     return out
 
 
 def scenario_series(
     name: str, runs: list[dict], rng: np.random.Generator
 ) -> tuple[list[np.ndarray], list[np.ndarray]]:
+    """Return (synthetic fUS per run, wheel per run that the analysis uses)."""
     wheels = [r["wheel"] for r in runs]
     eyes = [r["eye"] for r in runs]
     phi = PHI_STRONG if name == "ar_null_strong" else PHI_DEFAULT
-    noise = [ar1(len(w), phi, rng) for w in wheels]
+    noise = [ar1_unit(len(w), phi, rng) for w in wheels]
     if name in ("zero_effect", "ar_null_strong"):
         return noise, wheels
     if name == "known_effect":
         eff = [causal_conv(w, KERNEL) for w in wheels]
-    elif name == "misaligned_effect":
-        eff = [causal_conv(w, KERNEL, shift=MISALIGN_FRAMES) for w in wheels]
-    elif name == "correlated_nuisance":
+    elif name == "delayed_outside":
+        eff = [causal_conv(w, KERNEL, shift=SHIFT_OUTSIDE) for w in wheels]
+    elif name == "lead_misalignment":
+        eff = [causal_conv(w, KERNEL, shift=SHIFT_ADVANCE) for w in wheels]
+    elif name == "eye_driven":
         eff = [causal_conv(e, KERNEL) for e in eyes]
+    elif name == "hidden_confound":
+        # Unmeasured arousal A: correlated with the wheel (r ~ 0.5) but not in the analysis design.
+        arousal = []
+        for w in wheels:
+            z = (w - w.mean()) / w.std()
+            arousal.append(0.5 * z + np.sqrt(1 - 0.25) * rng.normal(size=len(w)))
+        eff = [causal_conv(a, KERNEL) for a in arousal]
     else:
         raise ValueError(name)
     pooled = np.concatenate(eff)
@@ -209,11 +225,14 @@ def one_replicate(name: str, runs: list[dict], rng: np.random.Generator) -> dict
         perm = [block_permute(w, rng) for w in wheels]
         null.append(leave_one_group_out_delta(build_runs(runs, ys, perm))["delta_pooled"])
     q95 = float(np.quantile(null, 0.95))
+    margin_ok = obs["delta_pooled"] > q95
+    dates_ok = obs["n_groups_positive"] >= MIN_CONSISTENT_DATES
     return {
         "delta_obs": obs["delta_pooled"],
         "q95_null": q95,
-        "detected": bool(obs["delta_pooled"] > q95),
-        "date_criterion_met": bool(obs["n_groups_positive"] >= MIN_CONSISTENT_DATES),
+        "detected_margin_only": bool(margin_ok),
+        "detected_full_rule": bool(margin_ok and dates_ok),
+        "date_criterion_met": bool(dates_ok),
     }
 
 
@@ -225,11 +244,13 @@ def main() -> None:
     results: dict[str, dict] = {}
     for name in SCENARIOS:
         reps = [one_replicate(name, runs, rng) for _ in range(N_REPS)]
-        det = np.array([r["detected"] for r in reps], dtype=float)
-        rate = float(det.mean())
+        full = np.array([r["detected_full_rule"] for r in reps], dtype=float)
+        margin = np.array([r["detected_margin_only"] for r in reps], dtype=float)
+        rate = float(full.mean())
         results[name] = {
-            "detection_rate": rate,
-            "monte_carlo_se": float(np.sqrt(rate * (1 - rate) / N_REPS)),
+            "detection_rate_full_rule": rate,
+            "monte_carlo_se_full_rule": float(np.sqrt(rate * (1 - rate) / N_REPS)),
+            "detection_rate_margin_only": float(margin.mean()),
             "mean_delta_obs": float(np.mean([r["delta_obs"] for r in reps])),
             "mean_q95_null": float(np.mean([r["q95_null"] for r in reps])),
             "date_criterion_rate": float(np.mean([r["date_criterion_met"] for r in reps])),
@@ -249,7 +270,8 @@ def main() -> None:
         "ar_phi_default": PHI_DEFAULT,
         "ar_phi_strong": PHI_STRONG,
         "effect_r2_target": EFFECT_R2,
-        "misalign_seconds": round(MISALIGN_FRAMES * 0.3, 2),
+        "shift_advance_s": round(SHIFT_ADVANCE * 0.3, 2),
+        "shift_outside_s": round(SHIFT_OUTSIDE * 0.3, 2),
         "results": results,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)

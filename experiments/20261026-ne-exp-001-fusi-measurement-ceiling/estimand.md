@@ -6,7 +6,7 @@ Classification: **EXPLORATORY**. Status PLANNED. Protocol.md is authoritative fo
 
 - **Target (Y):** whole-slice power-Doppler per frame (fUS).
 - **Predictor (X):** signed wheel velocity at lags 0 to 6 s, plus wheel-free nuisance (eye movement, pupil size).
-- The study is therefore a **neurovascular prediction / coupling audit**: how well wheel-linked behaviour predicts the fUS signal beyond eye and pupil. It is **not** decoding of wheel activity, and wheel activity is not a target.
+- The study is therefore a **behaviour-to-fUS prediction audit**: how well wheel-linked behaviour predicts the fUS signal beyond eye and pupil. It is **not** decoding of wheel activity, and it makes no neural claim.
 
 ## Primary estimand
 
@@ -37,7 +37,7 @@ Classification: **EXPLORATORY**. Status PLANNED. Protocol.md is authoritative fo
 ## What this result does NOT mean
 
 1. It does NOT show that fUSI decodes thoughts, intentions or any internal state.
-2. It does NOT show neurovascular coupling of neural origin: body motion and locomotion-linked blood flow are not excluded.
+2. It does NOT show a neural origin for the signal: body motion and locomotion-linked blood flow are not excluded.
 3. It does NOT generalise beyond one mouse, and does NOT generalise to humans.
 4. It does NOT establish a causal role of blood volume in locomotion.
 5. The 5-of-6-dates consistency criterion is NOT an independent population confirmation.

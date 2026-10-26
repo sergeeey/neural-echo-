@@ -172,13 +172,16 @@ def leave_one_group_out_delta(runs: list[RunDesign], alpha: float = ALPHA) -> di
 def block_permute(
     series: np.ndarray, rng: np.random.Generator, block: int = BLOCK_FRAMES
 ) -> np.ndarray:
-    """Permute whole blocks of a frame series, keeping within-block order."""
-    n_full = len(series) // block
-    head = series[: n_full * block].reshape(n_full, block)
-    tail = series[n_full * block :]
-    order = rng.permutation(n_full)
-    out = head[order].reshape(-1)
-    return np.concatenate([out, tail]) if len(tail) else out
+    """Permute whole blocks of a frame series, keeping within-block order.
+
+    Blocks have lengths in [block, 2*block): the remainder is merged into the last block, so
+    every sample is permuted and none is left in place.
+    """
+    n_blocks = max(len(series) // block, 1)
+    edges = np.linspace(0, len(series), n_blocks + 1).astype(int)
+    chunks = [series[edges[i] : edges[i + 1]] for i in range(n_blocks)]
+    order = rng.permutation(n_blocks)
+    return np.concatenate([chunks[i] for i in order])
 
 
 def window_mean(
