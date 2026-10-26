@@ -1,61 +1,44 @@
 # STATUS
 
-Last meaningful update: 2026-10-26 (data qualification; local commits only; not pushed)
+Last meaningful update: 2026-10-26 (freeze-readiness audit; local commits only; not pushed)
 
-This file is the cross-session source of truth. Update it in the same commit as any change that alters project state (see AGENTS.md § Session start and state updates). Commit identifiers are deliberately not recorded here: read them from `git log`.
+This file is the cross-session source of truth. Update it in the same commit as any change that alters project state (see AGENTS.md § Session start and state updates). Commit identifiers are read from `git log`, not recorded here.
 
 ## Current phase
 
-Phase 0 — repository and reproducibility foundation: **complete** (gates green locally, on a fresh clone, and on GitHub CI at the last pushed head).
-
-Phase 1 — scientific knowledge foundation: **in progress**. Mission received (`docs/MISSION.md`). First dataset (Landemard fUSI, CC BY-NC 4.0) qualified at structure level for one mouse.
-
-## Mission and brief
-
-- The brief is `docs/MISSION.md`. The root `ТЗ.txt` is the owner's original and is git-ignored.
-- Read the mission before choosing work.
+- Phase 0 (repository foundation): **complete**. Gates green locally, on a fresh clone, and on GitHub CI at the last pushed head.
+- Phase 1 (scientific knowledge foundation): **in progress**. First dataset (Landemard fUSI, CC BY-NC 4.0) audited at structure level for one mouse.
 
 ## Repository state
 
-- Branch `phase0/foundation`. Origin has the state up to `8caa73c`. Later local commits are not pushed. Read `git log` for the exact state.
+- Branch `phase0/foundation`. Origin has the state up to `8caa73c`. Later local commits are not pushed.
 - No merge, no push, no paid action since the owner's last instruction.
 
 ## Data (verified, sub-ALD002 only)
 
-- Archive: `data/raw/landemard2026/sub-ALD002.zip` (git-ignored). Size 5,269,296,348 bytes. MD5 matches figshare. SHA-256 recorded in the experiment manifest.
-- 17 fUS runs. Each run has wheel velocity (1000 Hz), whisking and eye movement with pupil size (60.024 Hz), and a power-Doppler NIfTI.
-- Wheel velocity is a rotary-encoder signal (cm/s). Whisking is documented as estimated from motion SVD **and wheel velocity**, so it is not independent of wheel.
-- No motion-independent reference region is identified in the archive. This is open.
-- The compact `.npz` files contain the authors' precomputed analyses (PSTHs, p-values, bouts). They are not used as raw inputs.
-- Scans table gives date only (no time of day).
-
-## Validated facts (FACT means checked against a primary or registry source)
-
-- FACT: Landemard et al. article is registered as Nature, DOI 10.1038/s41586-026-10350-9, issued 2026-04-15, licence CC BY 4.0 (Crossref). Full text **not** read.
-- FACT: The dataset (DOI 10.5522/04/31376338) is CC BY-NC 4.0 (DataCite, figshare).
-- FACT: The analysis code repository has no declared licence (GitHub API).
-- No scientific result is established by this repository.
-
-## Active hypotheses
-
-- H-001 (HYPOTHESIS, EXPLORATORY): wheel velocity carries information about fUS beyond eye and pupil in sub-ALD002. Freeze blocked. See `docs/HYPOTHESES.md`.
-- H-002: NOT_TESTABLE_WITH_CURRENT_DATA.
-- H-003: UNKNOWN.
+- Archive `data/raw/landemard2026/sub-ALD002.zip` (git-ignored); MD5 matches figshare; SHA-256 in the experiment manifest.
+- 17 fUS runs over 9 calendar dates; each run has wheel (1000 Hz), whisking and eye (30 or 60 Hz, per run), and a fUS NIfTI.
+- Whisking is documented as estimated from motion SVD **and wheel velocity**. Excluded from the wheel-free set.
+- No motion-independent reference or motion signal in the archive. Angiography is static (no time axis).
+- The compact `.npz` files contain the authors' precomputed analyses; not used as inputs.
 
 ## Active experiment
 
-- `experiments/20261026-ne-exp-001-fusi-measurement-ceiling`: **PLANNED**, not frozen, not run. Classified **EXPLORATORY**: with 5 mice the exact sign test cannot reach two-sided p below 0.0625, so alpha 0.05 is not attainable at mouse level.
+- `experiments/20261026-ne-exp-001-fusi-measurement-ceiling`: **PLANNED**, not frozen, not run. Classified **EXPLORATORY**. Verdict of the latest independent review: **BLOCKED**.
+- Holdout: `ref10_run-2` (rule in protocol.md). Not read.
 
-## Blockers before freezing
+## Open blockers before freezing
 
-1. Motion control: no motion-independent reference verified. Options (owner decision): angiography-based motion estimate, or an externally validated reference. Without one, the claim stays predictive only.
-2. VolumeTiming convention (frame onset or centre): UNKNOWN; affects lag 0.
-3. Autocorrelation length of the target: UNVERIFIED; must be measured on development runs to confirm the 10 s buffer.
-4. MCID: not set and not justifiable now. Owner decision if a practical threshold is wanted.
-5. Second scientific re-review: not yet requested. Round 1 BLOCK (B1–B7) is addressed in text; B-items depend on items 1–3 above.
+1. Motion control: no motion-independent reference verified. Owner decision needed (e.g. angiography-based mask after registration, or an externally validated reference). Without it the claim stays predictive only.
+2. Official `VolumeTiming` convention (fUSI-BIDS text not verified; ConfUSIus source indicates onset). Mapping rule declared; sensitivity required.
+3. Physio–fUS clock alignment: BIDS text does not define the zero of `StartTime`. Declared as assumption with shift sensitivity.
+4. VolumeTiming longer than NIfTI volume count in 8 of 16 development runs. Mapping declared; alternative as sensitivity.
+5. Positive control (planted wheel-coupled signal in development data) not yet run.
+6. MCID: not set; cannot be justified now. Owner decision if a practical threshold is wanted.
+7. Manifest: git commit, lock hash and seeds still empty; status must stay PLANNED until a freeze commit exists.
 
-## Next 3 actions
+## Next actions
 
-1. Verify a motion-independent reference signal from the fUS image (outside-brain pixels or large vessel), without looking at the final holdout.
-2. Verify wheel-to-fUS alignment with an available reference (e.g. VolumeTiming against physio start times).
-3. Request scientific re-review once blockers 1 and 2 are answered or explicitly declared open.
+1. Run the positive control on development data (synthetic signal injected into development runs only) to test whether the null can detect a planted effect.
+2. Implement the code path for the protocol (target, lags, ridge, leave-one-date-out, block permutation) and a target-derivative test, all before any holdout access.
+3. Request a fresh independent review after items 1–2; the protocol may reach READY_AS_EXPLORATORY only with items 2–4 declared as assumptions and item 5 run.
