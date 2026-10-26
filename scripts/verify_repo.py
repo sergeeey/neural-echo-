@@ -1,8 +1,8 @@
 """One-command repository verification.
 
 Runs every check and reports all failures at the end, so one run shows the full
-picture. Checks: required files, experiment-template structure, STATUS.md sections,
-package import, ruff lint, ruff format, pyright, pytest.
+picture. Checks: required files, experiment-template structure, every experiment folder
+under experiments/, STATUS.md sections, package import, ruff lint, ruff format, pyright, pytest.
 
 Usage (from repository root):
     uv run python scripts/verify_repo.py
@@ -31,6 +31,9 @@ REQUIRED_FILES = (
     "docs/DATA_POLICY.md",
     "docs/GLOSSARY.md",
     "docs/QUESTION_ZERO.md",
+    "docs/MISSION.md",
+    "docs/HYPOTHESES.md",
+    "docs/RESEARCH_BACKLOG.md",
     "docs/adr/README.md",
     "null_results/INDEX.md",
     "pearl_registry/INDEX.md",
@@ -80,6 +83,20 @@ def check_status() -> list[str]:
     ]
 
 
+def check_experiments() -> list[str]:
+    # WHY: the template check alone cannot catch a broken real experiment folder.
+    from validate_experiment import validate_experiment  # noqa: PLC0415  (scripts/ on sys.path)
+
+    root = ROOT / "experiments"
+    if not root.is_dir():
+        return ["experiments/ directory missing"]
+    findings: list[str] = []
+    for folder in sorted(root.iterdir()):
+        if folder.is_dir() and folder.name != "_template":
+            findings += [f"{folder.name}: {p}" for p in validate_experiment(folder)]
+    return findings
+
+
 def check_import() -> list[str]:
     try:
         importlib.import_module("neural_echo")
@@ -107,6 +124,8 @@ def main() -> int:
     failures += check_template()
     print("== status document")
     failures += check_status()
+    print("== experiment folders")
+    failures += check_experiments()
     print("== import")
     failures += check_import()
 

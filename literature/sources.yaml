@@ -1,3 +1,53 @@
-# Verified literature sources. Schema is defined in literature/README.md.
-# Intentionally empty: no entries until metadata is checked against a primary source.
-sources: []
+# Verified literature and dataset sources. Schema: literature/README.md.
+# Metadata below was checked on 2026-10-26 against Crossref, DataCite, the figshare API and the GitHub API.
+# No full text was read. Nothing here is a scientific result.
+
+sources:
+  - id: landemard2026-article
+    title: "Brainwide blood volume reflects opposing neural populations"
+    authors: ["Landemard A", "Krumin M", "Harris KD", "Carandini M"]
+    year: 2026
+    doi: "10.1038/s41586-026-10350-9"
+    url: "https://doi.org/10.1038/s41586-026-10350-9"
+    source_type: paper
+    accessed_at: "2026-10-26"
+    verification_status: METADATA_VERIFIED
+    licence: "CC BY 4.0 (Crossref licence field)"
+    supports: []
+    contradicts: []
+    notes: >
+      Journal: Nature, issued 2026-04-15 (Crossref). Full text NOT read.
+      Do not cite results from this entry until verification_status is PRIMARY_SOURCE_READ.
+
+  - id: landemard2026-dataset
+    title: "Functional Ultrasound Imaging (fUSI) data from head-fixed, freely running mice"
+    authors: ["Landemard A", "Krumin M", "Harris KD", "Carandini M"]
+    year: 2026
+    doi: "10.5522/04/31376338"
+    url: "https://rdr.ucl.ac.uk/articles/dataset/Functional_Ultrasound_Imaging_fUSI_data_from_head-fixed_freely_running_mice/31376338"
+    source_type: dataset
+    accessed_at: "2026-10-26"
+    verification_status: METADATA_VERIFIED
+    licence: "CC BY-NC 4.0 (non-commercial use only)"
+    supports: []
+    contradicts: []
+    notes: >
+      Publisher: UCL RDR (DataCite). BIDS format, 5 mice (sub-ALD001, -002, -009, -010, -019).
+      37 files, about 41.34 GB in total; subject archives are 5 to 11 GB each (figshare API).
+      Physiology channels listed in README: whisking, eye, wheel (when available).
+      README lists no speech, imagery or stimulus-category labels; spontaneous behaviour only.
+      NOT downloaded. Download requires explicit owner approval.
+      Labels were not verified inside the files (only the README and file list were read).
+
+  - id: landemard2026-code
+    title: "fusi_analyses (analysis code for the paper above)"
+    url: "https://github.com/agneslandemard/fusi_analyses"
+    source_type: code
+    accessed_at: "2026-10-26"
+    verification_status: METADATA_VERIFIED
+    licence: "none declared (GitHub API: spdx_id null)"
+    supports: []
+    contradicts: []
+    notes: >
+      Public, not archived, last push 2026-04-20 (GitHub API). No licence: reuse needs the
+      author's permission. Code was not read or executed.

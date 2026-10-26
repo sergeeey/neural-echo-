@@ -17,6 +17,17 @@
 - `supports` / `contradicts` — claim IDs from `docs/`
 - `notes`
 
+## Terms used in the Master Mission (docs/MISSION.md §7.1)
+
+The mission uses different names for the same states. This file's names are authoritative:
+
+| Mission term | Repository term |
+|---|---|
+| PRIMARY-VERIFIED | PRIMARY_SOURCE_READ |
+| ABSTRACT-ONLY, metadata checked | METADATA_VERIFIED |
+| UNVERIFIED | UNVERIFIED |
+| UNKNOWN | UNVERIFIED with a note |
+
 ## Rules
 
 - Reading a PDF does not make a paper `REPRODUCED`.

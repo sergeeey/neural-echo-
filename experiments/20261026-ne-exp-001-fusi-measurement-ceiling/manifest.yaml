@@ -1,0 +1,21 @@
+# Experiment manifest. Fill all fields. Use null for unknown, never guess.
+experiment_id: 20261026-ne-exp-001-fusi-measurement-ceiling
+creation_date: "2026-10-26"
+git_commit: null               # commit that contains the frozen protocol
+dataset:
+  name: "Functional Ultrasound Imaging (fUSI) data from head-fixed, freely running mice"
+  version: null                # to be recorded at download
+  source: "https://rdr.ucl.ac.uk/articles/dataset/Functional_Ultrasound_Imaging_fUSI_data_from_head-fixed_freely_running_mice/31376338"
+  licence: "CC BY-NC 4.0"
+  retrieved_at: null           # not downloaded; download needs owner approval
+  files: []                    # one entry per file used: {path: ..., sha256: ...}
+code_provenance:
+  repository: https://github.com/sergeeey/neural-echo-.git
+  commit: null
+  entrypoint: null
+random_seeds: []
+environment:
+  lock_file: uv.lock
+  lock_sha256: null
+outputs: []
+status: PLANNED

@@ -87,6 +87,14 @@ def validate_experiment(folder: Path) -> list[str]:
             if field not in manifest:
                 problems.append(f"manifest missing field: {field}")
 
+        # WHY: a manifest that names a different experiment than its folder makes the
+        # audit trail point at the wrong protocol. Template manifests carry null and are skipped.
+        declared_id = manifest.get("experiment_id")
+        if declared_id is not None and declared_id != folder.name:
+            problems.append(
+                f"experiment_id {declared_id!r} does not match folder name {folder.name!r}"
+            )
+
         status = manifest.get("status")
         # WHY: check the type before set membership; an unhashable value such as a
         # list would otherwise raise TypeError instead of producing a finding.
