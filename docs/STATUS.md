@@ -27,7 +27,7 @@ This file is the cross-session source of truth. Update it in the same commit as 
 - `experiments/20261026-ne-exp-001-fusi-measurement-ceiling`: **PLANNED**, not frozen, not run. Classified **EXPLORATORY**. Verdict of the latest independent review: **BLOCKED**.
 - Holdout: `ref10_run-2` (rule in protocol.md). Not read.
 
-## Open blockers before freezing
+## Blockers
 
 1. Motion control: no motion-independent reference verified. Owner decision needed (e.g. angiography-based mask after registration, or an externally validated reference). Without it the claim stays predictive only.
 2. Official `VolumeTiming` convention (fUSI-BIDS text not verified; ConfUSIus source indicates onset). Mapping rule declared; sensitivity required.
@@ -37,7 +37,7 @@ This file is the cross-session source of truth. Update it in the same commit as 
 6. MCID: not set; cannot be justified now. Owner decision if a practical threshold is wanted.
 7. Manifest: git commit, lock hash and seeds still empty; status must stay PLANNED until a freeze commit exists.
 
-## Next actions
+## Next 3 actions
 
 1. Run the positive control on development data (synthetic signal injected into development runs only) to test whether the null can detect a planted effect.
 2. Implement the code path for the protocol (target, lags, ridge, leave-one-date-out, block permutation) and a target-derivative test, all before any holdout access.
