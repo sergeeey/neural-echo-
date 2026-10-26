@@ -1,8 +1,8 @@
 """One-command repository verification.
 
 Runs every check and reports all failures at the end, so one run shows the full
-picture. Checks: required files, experiment-template structure, package import,
-ruff lint, ruff format, pyright, pytest.
+picture. Checks: required files, experiment-template structure, STATUS.md sections,
+package import, ruff lint, ruff format, pyright, pytest.
 
 Usage (from repository root):
     uv run python scripts/verify_repo.py
@@ -58,6 +58,28 @@ def check_template() -> list[str]:
     return [f"template structure: {p}" for p in validate_experiment(template)]
 
 
+STATUS_REQUIRED_SECTIONS = (
+    "## Current phase",
+    "## Blockers",
+    "## Next 3 actions",
+    "Last meaningful update:",
+)
+
+
+def check_status() -> list[str]:
+    # WHY: STATUS.md is the cross-session memory. Its sections are checked so that a
+    # rewrite cannot silently drop the parts a new session relies on.
+    path = ROOT / "docs" / "STATUS.md"
+    if not path.is_file():
+        # WHY: a missing file is already reported by check_required_files(); returning here
+        # keeps main() reporting all failures instead of crashing with a traceback.
+        return ["docs/STATUS.md missing"]
+    text = path.read_text(encoding="utf-8")
+    return [
+        f"docs/STATUS.md missing section: {s}" for s in STATUS_REQUIRED_SECTIONS if s not in text
+    ]
+
+
 def check_import() -> list[str]:
     try:
         importlib.import_module("neural_echo")
@@ -83,6 +105,8 @@ def main() -> int:
     failures += check_required_files()
     print("== experiment template")
     failures += check_template()
+    print("== status document")
+    failures += check_status()
     print("== import")
     failures += check_import()
 

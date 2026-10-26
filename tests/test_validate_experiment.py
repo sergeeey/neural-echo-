@@ -7,7 +7,7 @@ import pytest
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from validate_experiment import main, validate_experiment  # noqa: E402
+from validate_experiment import main, validate_experiment  # noqa: E402  (scripts/ is on sys.path, see above)
 
 TEMPLATE = ROOT / "experiments" / "_template"
 

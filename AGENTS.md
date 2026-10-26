@@ -76,6 +76,13 @@ Status vocabulary: `PLANNED`, `FROZEN`, `RUNNING`, `SUPPORTED`, `NOT_SUPPORTED`,
 - Declaring CI green without running it or observing a passing run.
 - Hiding failing tests, lint, or type errors.
 
+## Session start and state updates
+
+- Start of session: read `docs/STATUS.md`, then `git log --oneline -5` and `git status`. If STATUS disagrees with git, trust git and fix STATUS in your first commit.
+- Any commit that changes project state (phase, results, blockers, branch/CI status) updates `docs/STATUS.md` in the same commit. Do not leave it for later.
+- Before commit with 3+ changed files: run `uv run python scripts/verify_repo.py` and an independent review, then commit. Do not commit first and review afterwards.
+- Do not hard-code volatile numbers (test counts, CI run IDs in long-lived docs) unless a check enforces them.
+
 ## Definition of "next task"
 
 Read `docs/STATUS.md` → "Next 3 actions". If empty or ambiguous, stop and ask the human.
