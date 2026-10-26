@@ -5,7 +5,10 @@ git_commit: null               # commit that contains the frozen protocol
 dataset:
   name: null
   version: null
-  checksum_sha256: null
+  source: null                 # URL or citation as verified in literature/sources.yaml
+  licence: null
+  retrieved_at: null           # YYYY-MM-DD
+  files: []                    # one entry per file used: {path: ..., sha256: ...}
 code_provenance:
   repository: https://github.com/sergeeey/neural-echo-.git
   commit: null

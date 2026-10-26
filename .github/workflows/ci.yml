@@ -17,17 +17,7 @@ jobs:
       - name: Install from lockfile
         run: uv sync --locked --dev
 
-      - name: Ruff lint
-        run: uv run ruff check .
-
-      - name: Ruff format check
-        run: uv run ruff format --check .
-
-      - name: Pyright
-        run: uv run pyright
-
-      - name: Pytest
-        run: uv run pytest -q
-
-      - name: Repository validator
+      # WHY: one entry point. verify_repo.py runs ruff, format, pyright and pytest itself,
+      # so listing them here again would only duplicate work and failure output.
+      - name: Repository verification
         run: uv run python scripts/verify_repo.py

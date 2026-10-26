@@ -52,8 +52,8 @@ uv run python scripts/validate_experiment.py experiments/<id>   # structural che
 
 1. Copy `experiments/_template/` to `experiments/<YYYYMMDD>-<slug>/`.
 2. Fill `question.md`, `estimand.md`, `claim.md`, `alternative_hypotheses.md` (H1 target, H2 alternative, H0 artifact), `controls.md`.
-3. Fill `protocol.md` completely, then set `status: FROZEN` in `manifest.yaml` and commit before running anything.
-4. Run. Record outputs and the git commit in `manifest.yaml`.
+3. Fill `protocol.md` completely, then set `status: FROZEN` in `manifest.yaml` and commit before running anything. The whole of `protocol.md` is frozen, not only its last section.
+4. Set `status: RUNNING` while a run is in progress. Record outputs and the git commit in `manifest.yaml`. Status moves to a result (`SUPPORTED`, `NOT_SUPPORTED`, `INCONCLUSIVE`, `INVALIDATED`) only after `decision.md` is written.
 5. Write `decision.md`, including "What would change our model of the problem?".
 6. Update `null_results/INDEX.md` for non-supported outcomes and `docs/STATUS.md`.
 

@@ -8,12 +8,13 @@ Phase 0 — repository and reproducibility foundation (in progress). Phase 1 has
 
 ## Validated facts
 
-- FACT: The repository foundation files exist in this commit (see the git log for what was built).
+- FACT: Phase 0 gates pass locally and on a fresh clone of the committed state: `uv sync --locked --dev`, Ruff lint and format, Pyright, pytest (9 tests), `scripts/verify_repo.py` (exit 0). Evidence: command output in the session log.
+- FACT: CI workflow exists (`.github/workflows/ci.yml`) but has NOT been observed running on GitHub.
 - No scientific facts are established by this repository yet.
 
 ## Active hypotheses
 
-None registered yet. Candidate questions are listed in `docs/QUESTION_ZERO.md`; none is a hypothesis until it has an experiment folder with `alternative_hypotheses.md`.
+None registered. Questions in `docs/QUESTION_ZERO.md` are open questions, not hypotheses. A question becomes a hypothesis only when an experiment folder states H1/H2/H0 in its `alternative_hypotheses.md`.
 
 ## Active experiment
 
@@ -26,6 +27,6 @@ None.
 
 ## Next 3 actions
 
-1. Verify Phase 0 gates: `uv sync --locked --dev`, Ruff, Pyright, Pytest, `scripts/verify_repo.py`, and a fresh-clone run.
-2. Review the Phase 0 commit with an independent reviewer; fix findings.
-3. Ask the human whether to push the branch and start Phase 1 (literature and dataset audit).
+1. Observe the CI run for the Phase 0 branch once the human approves a push.
+2. Ask the human whether to push the branch.
+3. After push approval and CI green, ask whether to start Phase 1 (literature and dataset audit).

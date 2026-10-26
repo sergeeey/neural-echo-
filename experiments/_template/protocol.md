@@ -1,10 +1,14 @@
 # Protocol
 
+## FROZEN PROTOCOL
+
+> Everything in this file is fixed when `status` in `manifest.yaml` becomes `FROZEN`, before any run. Fill every section below first, then freeze. Changes after freezing require a dated entry under "Amendments".
+
 ## Dataset
 
 - Name and version:
 - Source, licence, retrieval date:
-- Checksum (SHA-256) of files used:
+- Per-file SHA-256 checksums (see `manifest.yaml` `dataset.files`):
 
 ## Split strategy
 
@@ -30,9 +34,7 @@
 - Primary metric and its uncertainty method:
 - Secondary metrics:
 
-## FROZEN PROTOCOL
-
-> Everything below this line is fixed before the run. Changes require a dated amendment section.
+## Model and run parameters
 
 - Model and hyperparameters:
 - Random seeds:

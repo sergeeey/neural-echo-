@@ -1,7 +1,8 @@
 """One-command repository verification.
 
-Runs: required-file check, experiment-template check, package import,
-ruff, pyright, and pytest. Exits non-zero on the first failing step.
+Runs every check and reports all failures at the end, so one run shows the full
+picture. Checks: required files, experiment-template structure, package import,
+ruff lint, ruff format, pyright, pytest.
 
 Usage (from repository root):
     uv run python scripts/verify_repo.py
@@ -53,13 +54,8 @@ def check_template() -> list[str]:
     missing = [f"template missing: {n}" for n in TEMPLATE_FILES if not (template / n).is_file()]
     if missing:
         return missing
-    # The template is intentionally unfilled (status PLANNED, placeholders), so only
-    # the structural check on file presence and manifest shape is meaningful here.
-    return [
-        f"template structure: {p}"
-        for p in validate_experiment(template)
-        if not p.startswith("protocol.md lacks")
-    ]
+    # The template is unfilled and status PLANNED, so the full structural check applies as-is.
+    return [f"template structure: {p}" for p in validate_experiment(template)]
 
 
 def check_import() -> list[str]:
@@ -72,7 +68,10 @@ def check_import() -> list[str]:
 
 def run(step: str, cmd: list[str]) -> list[str]:
     print(f"== {step}: {' '.join(cmd)}", flush=True)
-    result = subprocess.run(cmd, cwd=ROOT, check=False)
+    try:
+        result = subprocess.run(cmd, cwd=ROOT, check=False)
+    except FileNotFoundError:
+        return [f"{step}: command not found ({cmd[0]}); install uv first"]
     return [] if result.returncode == 0 else [f"{step} failed (exit {result.returncode})"]
 
 
