@@ -1,42 +1,53 @@
 # Decision
 
-Not yet. Status PLANNED. No evaluation has been run. Audits used sidecars, the scans table, angiography and NIfTI headers, summary statistics, and the whole-slice signal of the 16 development runs. The holdout was not read.
+Not yet. Status PLANNED. No evaluation of the real signal has been run. Audits read sidecars, the scans table, angiography and NIfTI headers, summary statistics, and the whole-slice signal of the 16 development runs. The holdout was not read. Synthetic controls use development-run wheel, eye and pupil series with simulated fUS.
 
-**Classification:** EXPLORATORY. Reason: no independent motion-free reference is verified, and a replication across the 5 animals cannot reach alpha 0.05 (exact sign test minimum 0.0625). Power 0.8 is not claimed.
+**Classification:** EXPLORATORY. A between-animal claim cannot reach alpha 0.05 with 5 animals (exact sign-test minimum 0.0625). Power 0.8 is not claimed.
 
-**MCID:** not set; cannot be justified now (no effect-size anchor; article full text not read; no decision threshold). Not to be chosen after results.
-
-## Freeze readiness table
-
-| # | Blocker | How checked | Confirmed source(s) | Actual status | Remaining risk |
-|---|---|---|---|---|---|
-| 1 | Motion-independent reference or motion signal | Archive listing; angiography header and sidecar | No motion or reference file in the archive. Angiography is static, 60×125×36, no time axis, voxels differ from fUS | **OPEN.** Blocks any neural reading; claim stays predictive | Body motion and locomotion-linked blood flow not separated |
-| 2 | Motion-derived metrics | Whisking sidecar | Whisking is "estimated from motion SVD and wheel velocity" | Sensitivity only, explicitly circular with wheel | Cannot serve as a control |
-| 3 | `VolumeTiming` convention | ConfUSIus source: "onset time of each volume"; default reference start | Third-party code; official fUSI-BIDS text not verified | **Partly verified** (onset reference). Official text OPEN | Lag-0 interpretation |
-| 4 | Physio–fUS clock alignment | BIDS physio text fetched | Zero of `StartTime` not defined in the fetched text | **OPEN.** Declared as an assumption with shift sensitivity (±1, ±2 s) | Lag timing uncertain by up to 2 s |
-| 5 | VolumeTiming vs NIfTI volumes | Per-run comparison, development runs (holdout also checked for its own match) | 8 of 16 development runs: one extra onset. ref02: 11308 vs 11307; ref27: 11319 vs 11318. ref22 and ref06_run-2 match | **Declared** mapping (first t onsets) with alternative as sensitivity. Official convention still OPEN | One-frame misalignment if wrong |
-| 6 | Autocorrelation and blocks | Integrated tau on 16 development runs | Median 49 frames (≈15 s), max 76 (≈23 s). ACF at lag 20: 0.33–0.54 | **Done:** 120 s blocks, 60 s buffers | Estimates from one mouse; buffer definition now stated for folds and permutations |
-| 7 | Holdout identity and scoring | scans.tsv; protocol text | `ref10_run-2` by rule; fixed one-shot scoring, 1000 permutations, seed 20261026 | **Done in text** | Null on one held-out run is weak |
-| 8 | Data access | Archive listing; ConfUSIus tree; Landemard DOI / DataCite / figshare | Only sub-ALD002 downloaded (5.27 GB, checksums match) | **Done.** No further download | Other subjects not examined |
-| 9 | Primary metric and sign | Protocol text | Gaussian log loss; Δ = L_nuisance − L_full; positive = wheel helps; variance from training residuals | **Done in text** | Gaussian assumption not checked |
-| 10 | MCID | No literature full text; no decision threshold | None | **Not set** | Null results uninformative |
-| 11 | Statistical power at n=5 | Exact sign test | Minimum two-sided p = 0.0625 (replication only) | **Confirmed**, applied to replication, not to the 1-mouse primary analysis | Power 0.8 not claimed |
-| 12 | Target-derivative leakage | Protocol text | No regressor from target; no registration motion | **Done in text.** Code check still to be written before freezing | Implementation risk |
-| 13 | Freeze status | manifest.yaml; protocol heading | Heading present; status PLANNED; git_commit, lock hash and seeds empty | **Not frozen** | Must not be read as frozen |
-| 14 | Edge frames | ref22 onset 0.056 s; wheel starts 0 s | First 20 frames dropped in all runs | **Done in text** | Shorter effective runs |
-| 15 | Clutter filter support | ClutterFilterWindowDuration 0.6 s vs frame 0.3 s | Frame window may understate temporal support | **Noted.** Affects interpretation of lag 0 | Temporal smearing |
-| 16 | Positive control (synthetic wheel-coupled signal in development data) | Not yet run | — | **OPEN.** Cheap; needed to show the null can detect a planted effect | Null may be unable to detect anything |
+**MCID:** not set, cannot be justified now. Not to be chosen after results.
 
 ## Verdict
 
-**BLOCKED.** Open: items 1, 3 (official text), 4 (declared, not verified), 5 (declared, convention unverified), 10 (owner decision), 13 (not frozen), 16 (positive control, not yet run).
+**BLOCKED.** Three new findings from the synthetic controls and the timing audit block freezing.
 
-The text rules (7, 9, 12, 14) are now fixed. Items 4 and 5 can become declared assumptions with sensitivity analyses; that would make READY_AS_EXPLORATORY reachable for a predictive claim, provided item 16 is run first.
+## Synthetic controls (scripts/run_nex001_controls.py, 60 replicates × 50 permutations, seed 20261026)
 
-## Parameters that affect the final test (all fixed in protocol.md before holdout is read)
+Eight count-matched runs, six dates, procedure as in protocol.md. Monte Carlo SE given. Results saved in `controls_results.json`.
 
-Holdout identity; development set; date grouping and 7-of-9 criterion; per-run preparation (linear mean target, detrend, edge-frame drop, 99% coverage); VolumeTiming mapping rule; clock-shift assumption (0 primary); lag grid 0–6 s, wheel only; ridge alpha 1.0; training-only standardisation; residual variance per model; permutation count 1000, seed 20261026; block 120 s; buffer 60 s.
+| Scenario | Truth | Detection rate | MC SE | Reading |
+|---|---|---|---|---|
+| zero_effect | no effect | 0.05 | ±0.028 | Calibrated |
+| ar_null_strong (φ=0.99) | no effect | **0.13** | ±0.044 | **Inflated false positives** under strong memory |
+| known_effect | wheel effect, R²≈0.05 | 0.92 | ±0.036 | Power, optimistic: kernel shape matches the model's lags |
+| misaligned_effect (2.1 s) | delayed effect | 0.95 | ±0.028 | **Scenario too weak**: the shifted kernel still fits inside the 0–6 s window, so no power loss is tested |
+| correlated_nuisance | eye-driven signal, no wheel effect | **0.12** | ±0.041 | **Inflated false positives** when the nuisance is correlated with the predictor path |
+
+Reading:
+- The null is calibrated for the zero-effect case only.
+- Under strong autocorrelation and under an eye-driven signal, the procedure gives false positives above 5%. With 60 replicates the intervals are wide (±0.04), so the excess is a warning, not a precise size. It is nonetheless above nominal in both cases and must be fixed or accepted explicitly before freezing.
+- The misalignment control did not stress the temporal model. A stronger shift (beyond the lag window) is required before any claim about timing tolerance.
+- Known-effect power is an upper bound: the simulated kernel shares the model's form.
+
+## Timing integrity (see timing_integrity.md)
+
+- 8 of 17 runs have VolumeTiming one element longer than NIfTI volumes (+1 each). Mechanism not established; those runs are excluded from the primary analysis (exclusion, not truncation).
+- Actual frame period is 0.30013 s (per-run slope), not the nominal 0.3 s. A nominal grid drifts about 3.5 s over a run; the protocol uses recorded onsets.
+- Interval gaps are masked (6 s after each gap); 5 runs have gaps, one of 3.9 s.
+- Physio StartTime zero is undefined in the fetched BIDS text: clock alignment remains an assumption.
+
+## Blocking items (current)
+
+1. **Null calibration under strong autocorrelation and correlated nuisance** (controls above). Requires a revised null (e.g. longer or model-based blocks) tested on synthetic data before freezing; the revision must be declared as a change made before any holdout evaluation.
+2. **Misalignment control too weak.** Redesign with a shift that moves the effect outside the 0–6 s window, to measure power loss.
+3. Motion-independent reference: no verified signal; claim stays predictive.
+4. Official VolumeTiming convention (fUSI-BIDS text not verified); clock alignment assumed.
+5. Manifest: git commit, lock hash and seeds empty; status must stay PLANNED until a freeze commit exists.
+6. MCID: owner decision if a practical threshold is wanted.
+
+## Options if the timing cannot be verified
+
+Per the owner's instruction: if real timestamps cannot be recovered, switch to a dataset or task that does not require unproven synchronisation. For this archive, a predictive analysis on the 8 matched runs with declared assumptions is the only remaining route, and it stays EXPLORATORY.
 
 ## What would change our model of the problem
 
-A gain above the block-permutation null, stable across dates, would suggest wheel velocity carries predictive information for this whole-slice signal, pending clock alignment. It would not show a neural origin until a motion-independent reference is verified.
+A gain above a calibrated null, stable across dates, would suggest wheel velocity carries predictive information for this whole-slice signal, pending clock alignment and motion control. It would not show a neural origin.
