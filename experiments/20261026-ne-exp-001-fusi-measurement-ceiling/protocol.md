@@ -2,48 +2,59 @@
 
 ## FROZEN PROTOCOL
 
-> Status: PLANNED. Not frozen. Nothing below is fixed until this section is reviewed, the data download is approved, and the status is set to FROZEN in manifest.yaml.
+> Status: PLANNED. **Not frozen.** Nothing below is fixed until the blocking items in decision.md are resolved, a scientific review returns READY, and manifest.yaml is set to FROZEN. Any change after freezing needs a dated amendment.
 
-## Dataset
+## Dataset (verified 2026-10-26)
 
-- Name and version: Functional Ultrasound Imaging (fUSI) data from head-fixed, freely running mice (DOI 10.5522/04/31376338), version as downloaded.
-- Source, licence, retrieval date: UCL RDR; CC BY-NC 4.0; not yet retrieved.
-- Per-file SHA-256 checksums: to be recorded at download time (manifest.yaml `dataset.files`).
+- Source: UCL RDR deposit, DOI 10.5522/04/31376338, version 3, licence CC BY-NC 4.0.
+- Archive used: `sub-ALD002.zip` (5,269,296,348 bytes). MD5 matches the figshare record (40ac3dd90ad155354390c4968cf973f4). SHA-256 56c445de19f3beca47f29e4d4a5db57e6411e1eaff2f6cccd80078da33cf48cd.
+- Local path: `data/raw/landemard2026/` (git-ignored, not committed).
+- Structure verified: 17 fUS runs, each with wheel, whisking and eye physio files. Wheel 1000 Hz (3410 s). Whisking and eye 60.024 Hz (3417 s, start -12.74 s). fUS frame 0.3 s, VolumeTiming starting 6.948 s, one slice 60 x 125 px, 11307 frames (reference run).
+- Not verified: the archive contains no motion signal and no reference region (structure only; no image-based mask has been made).
+- The scans table gives date only (no time of day). Session identity: date + experiment_id.
 
 ## Split strategy
 
-- Unit of splitting: session (and subject). Held-out sessions are never used for fitting or model selection.
-- Generalisation unit: mouse. The claim about generalisation uses leave-one-mouse-out. Session-held-out results support only within-mouse stability.
-- Paired design: both models are fitted and scored on the identical sessions and time points. Sessions lacking whisking or eye channels are excluded from both.
-- Train / validation / holdout: to be set once the session list is read. Holdout used once.
+- Final holdout: the last fUS run of sub-ALD002. It is not inspected in any analysis before freezing, and is excluded from all threshold, lag and model choices.
+- Development runs: the other 16 runs, used for choices made before freezing.
+- Evaluation: leave-one-run-out across the 16 development runs, plus within-run blocked splits (5 contiguous blocks, 10 s buffer each side).
+- Generalisation to other mice: a pre-declared replication step, not part of the primary result.
+
+## Time alignment
+
+- Common clock: fUS VolumeTiming. Wheel (start 0 s) and whisking/eye (start -12.74 s) are resampled onto the fUS frame times by window averaging. The alignment has not been checked against an event; this is an open risk.
 
 ## Leakage controls
 
-- Session leakage: no session appears in both training and test.
-- Subject leakage: the interval is resampled by mouse. Leave-one-mouse-out is the primary generalisation check, not an optional add-on.
-- Motion-independent control (required; needs no motion file): the same model on the fUSI signal from a reference region outside the brain or from a large vessel. If that reference predicts wheel activity about as well as the brain signal, H0 (motion artefact) is not excluded.
-- Motion regressor: used only if the files contain one. Its absence is recorded in the decision, not assumed away.
-- Lag windows: set from the haemodynamic delay in the data before freezing. Not set in this draft.
-- Temporal permutation: circular shift of the wheel label within each session.
+- Session leakage: no session in both training and evaluation.
+- No derivative of the target in any model. The target is the fUS slice signal; no regressor is computed from it.
+- No authors' precomputed products (PSTH, p-value, bout files) are used.
+- Whisking is excluded from the wheel-free nuisance set, because its definition uses wheel velocity.
 
 ## Baselines
 
-- Nuisance-only: whisking and eye regressors (plus motion if available, see Leakage controls), same model class.
-- Chance: majority class per session.
-- Shuffled-label control: wheel labels permuted within session.
+- Nuisance-only: eye movement and pupil size, with the same lag basis.
+- Chance: predicting the run mean.
+- Shuffled control: wheel velocity permuted in blocks of 10 s, to test the whole pipeline.
 
 ## Metrics
 
-- Primary: held-out log loss difference (nuisance-only minus full), with a mouse-cluster bootstrap 95% interval. Positive means the fUSI model helps.
-- Detectability: n = 5 mice; baseline or sigma UNKNOWN until data; alpha 0.05 two-sided; power 0.8; MDE UNKNOWN; MCID NOT SET (owner decision).
-- Secondary: balanced accuracy, Brier score. Reported, not used to decide the claim.
+- Primary: held-out R² gain (eye + pupil + wheel minus eye + pupil), pooled across runs, with an interval from resampling runs.
+- Secondary: per-run gain sign count.
 
 ## Model and run parameters
 
-- Model class: to be fixed before data is read. Candidate: regularised logistic regression on time-lagged features. Hyperparameters fixed in advance, not tuned on held-out data.
-- Random seeds: to be recorded.
-- Software environment: uv.lock of this repository (hash recorded in manifest.yaml).
-- Success and falsification criteria: as in claim.md.
+- Model class: ridge regression on lagged features. Lag basis 0 to 6 s, fixed here. Penalty chosen only inside the development runs by nested CV. Final penalty fixed before the holdout.
+- Random seeds: fixed and recorded.
+- Software environment: uv.lock of this repository.
+
+## Detectability (estimand-ops rule)
+
+- n: 1 mouse for the primary analysis; 5 mice for the replication step. 16 development runs as repeated measures, not independent units.
+- baseline or sigma: UNKNOWN until development runs are summarised.
+- alpha, power: see decision.md. The exact sign test over 5 mice cannot reach two-sided p below 0.0625, so alpha 0.05 is not attainable at mouse level. Power 0.8 is not claimed.
+- MDE: UNKNOWN.
+- MCID: not set and not justifiable now (see decision.md).
 
 ## Amendments
 

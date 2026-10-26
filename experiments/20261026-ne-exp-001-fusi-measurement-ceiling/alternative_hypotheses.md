@@ -2,8 +2,8 @@
 
 | ID | Hypothesis | Prediction under this hypothesis | Prediction that would refute it |
 |---|---|---|---|
-| H1 | Power-Doppler carries wheel-activity information beyond whisking, eye and motion regressors | Full model beats nuisance-only on held-out sessions | Nuisance-only matches or beats full model |
-| H2 | The whole signal is explained by whisking, eye and motion | Nuisance-only matches full model | Full model beats nuisance-only on held-out sessions |
-| H0 | The apparent gain comes from motion artefact, or from signal that is not specific to the brain | The gain disappears under the reference-region control and the session-mismatched control | The gain persists under both controls |
+| H1 | fUS signal carries wheel-velocity information beyond eye and pupil | Positive held-out R² gain from wheel, in most runs | Gain zero or negative, or positive in fewer than half of runs |
+| H2 | The signal is explained entirely by eye and pupil (arousal and pupil-linked state) | Gain near zero | Gain clearly positive |
+| H0 | The gain is motion artefact from wheel-driven body movement, not neural or vascular coupling | Gain persists unchanged when the signal is replaced by a non-brain or large-vessel reference, and sessions are mismatched | Gain disappears under the reference control and the session-mismatched control |
 
-**Discriminating test:** the nuisance-only baseline versus the full model, leave-one-mouse-out, with the reference-region control and the session-mismatched control. The H1 vs H0 split depends on the reference-region control, which needs no motion file.
+**Discriminating test:** the H1-vs-H0 split needs a reference signal that does not depend on brain tissue. None is verified in the archive yet. Until one is verified, H0 is open, and H1 cannot be claimed as neural.

@@ -2,13 +2,18 @@
 experiment_id: 20261026-ne-exp-001-fusi-measurement-ceiling
 creation_date: "2026-10-26"
 git_commit: null               # commit that contains the frozen protocol
+classification: EXPLORATORY    # see decision.md; no alpha-0.05 claim is possible with 5 mice
 dataset:
   name: "Functional Ultrasound Imaging (fUSI) data from head-fixed, freely running mice"
-  version: "3 (DataCite / figshare deposit version; confirmed by review)"
+  version: "3 (DataCite / figshare deposit version)"
   source: "https://rdr.ucl.ac.uk/articles/dataset/Functional_Ultrasound_Imaging_fUSI_data_from_head-fixed_freely_running_mice/31376338"
   licence: "CC BY-NC 4.0"
-  retrieved_at: null           # not downloaded; download needs owner approval
-  files: []                    # one entry per file used: {path: ..., sha256: ...}
+  retrieved_at: "2026-10-26"
+  files:
+    - path: "data/raw/landemard2026/sub-ALD002.zip"
+      sha256: "56c445de19f3beca47f29e4d4a5db57e6411e1eaff2f6cccd80078da33cf48cd"
+      md5_figshare_match: "40ac3dd90ad155354390c4968cf973f4"
+      bytes: 5269296348
 code_provenance:
   repository: https://github.com/sergeeey/neural-echo-.git
   commit: null

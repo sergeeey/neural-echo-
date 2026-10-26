@@ -1,10 +1,10 @@
 # Controls
 
-- **Negative controls:** shuffled wheel labels within session; circular label shift; chance baseline.
-- **Motion-independent control (addresses H0, required):** the same model on a reference-region fUSI signal (outside the brain or a large vessel). Positive only if the brain signal beats the reference.
-- **Session-mismatched control (required):** fUSI features from a different session of the same mouse, paired with the target session's wheel labels. Same feature count as the real model.
-- **Leakage checks:** session-disjoint splits; motion control if a motion signal exists (else NOT AVAILABLE); subject-level report.
-- **Simple baseline result:** pending (nuisance-only model).
-- **Sensitivity analyses:** motion correction on and off; two lag windows.
-- **Known confounds:** whisking, eye and wheel movement may co-vary with blood volume. The nuisance model tests whether the wheel signal adds anything beyond whisking and eye. Wheel is the target here, so it is not a regressor.
+- **Negative controls:** wheel velocity permuted in 10 s blocks (pipeline check); chance baseline (run mean).
+- **Session-mismatched control (required):** fUS features from another run, paired with the target run's wheel velocity. Same feature count as the real model. The gain must vanish.
+- **Reference-region control (required, not yet possible):** the same model on a signal from outside the brain or from a large vessel. No such signal is verified in the archive. Until one is verified, this control is NOT AVAILABLE, and H0 is not excluded.
+- **Wheel-free nuisance:** eye movement and pupil size. Both are computed from eye camera data, not from wheel velocity.
+- **Whisking sensitivity:** whisking is reported as a sensitivity analysis only. Its definition includes wheel velocity, so it is not an independent control.
+- **Target-derivative check:** no regressor may be computed from the fUS target. Checked by code review before freezing.
+- **Known confounds:** wheel movement moves the body, eye and whiskers. The eye-and-pupil nuisance set does not remove all of it. Motion control is the open problem.
 - **Positive control:** none available in this dataset. Stated as a limitation.
