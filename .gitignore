@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.pyright/
+.mypy_cache/
+build/
+dist/
+*.egg-info/
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Neural / human data: never commit
+data/raw/
+data/interim/
+data/processed/
+
+# Generated local artifacts
+*.log
+reports/tmp/

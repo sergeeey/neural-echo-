@@ -1,0 +1,18 @@
+# Experiment manifest. Fill all fields. Use null for unknown, never guess.
+experiment_id: null            # e.g. 20261101-example-slug
+creation_date: null            # YYYY-MM-DD
+git_commit: null               # commit that contains the frozen protocol
+dataset:
+  name: null
+  version: null
+  checksum_sha256: null
+code_provenance:
+  repository: https://github.com/sergeeey/neural-echo-.git
+  commit: null
+  entrypoint: null
+random_seeds: []
+environment:
+  lock_file: uv.lock
+  lock_sha256: null
+outputs: []                    # paths to small machine-readable metrics, relative to this folder
+status: PLANNED                # PLANNED | FROZEN | RUNNING | SUPPORTED | NOT_SUPPORTED | INCONCLUSIVE | INVALIDATED
