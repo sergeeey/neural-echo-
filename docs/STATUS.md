@@ -48,10 +48,11 @@ Phase 1 — scientific knowledge foundation: **in progress**. Mission received (
 
 ## Blockers before freezing
 
-1. Reference-region definition: a motion-independent signal. Not verified; needs an image-based mask and an owner decision.
-2. Time-alignment check (wheel to fUS clock). Not verified against any event.
-3. MCID: not set and not justifiable now. Owner decision if a practical threshold is required.
-4. Scientific re-review of the revised protocol (not yet requested).
+1. Motion control: no motion-independent reference verified. Options (owner decision): angiography-based motion estimate, or an externally validated reference. Without one, the claim stays predictive only.
+2. VolumeTiming convention (frame onset or centre): UNKNOWN; affects lag 0.
+3. Autocorrelation length of the target: UNVERIFIED; must be measured on development runs to confirm the 10 s buffer.
+4. MCID: not set and not justifiable now. Owner decision if a practical threshold is wanted.
+5. Second scientific re-review: not yet requested. Round 1 BLOCK (B1–B7) is addressed in text; B-items depend on items 1–3 above.
 
 ## Next 3 actions
 
