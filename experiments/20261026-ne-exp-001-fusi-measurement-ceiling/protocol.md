@@ -13,13 +13,17 @@
 ## Split strategy
 
 - Unit of splitting: session (and subject). Held-out sessions are never used for fitting or model selection.
+- Generalisation unit: mouse. The claim about generalisation uses leave-one-mouse-out. Session-held-out results support only within-mouse stability.
+- Paired design: both models are fitted and scored on the identical sessions and time points. Sessions lacking whisking or eye channels are excluded from both.
 - Train / validation / holdout: to be set once the session list is read. Holdout used once.
 
 ## Leakage controls
 
 - Session leakage: no session appears in both training and test.
-- Subject leakage: reported separately; a leave-one-subject-out run is added if at least 3 subjects qualify.
-- Motion control: only if a motion regressor or motion-correction output is found in the files. Otherwise this control is marked NOT AVAILABLE in the decision, not assumed.
+- Subject leakage: the interval is resampled by mouse. Leave-one-mouse-out is the primary generalisation check, not an optional add-on.
+- Motion-independent control (required; needs no motion file): the same model on the fUSI signal from a reference region outside the brain or from a large vessel. If that reference predicts wheel activity about as well as the brain signal, H0 (motion artefact) is not excluded.
+- Motion regressor: used only if the files contain one. Its absence is recorded in the decision, not assumed away.
+- Lag windows: set from the haemodynamic delay in the data before freezing. Not set in this draft.
 - Temporal permutation: circular shift of the wheel label within each session.
 
 ## Baselines
@@ -30,7 +34,8 @@
 
 ## Metrics
 
-- Primary: held-out log loss difference (nuisance-only minus full), with a session-cluster bootstrap 95% interval. Positive means the fUSI model helps.
+- Primary: held-out log loss difference (nuisance-only minus full), with a mouse-cluster bootstrap 95% interval. Positive means the fUSI model helps.
+- Detectability: n = 5 mice; baseline or sigma UNKNOWN until data; alpha 0.05 two-sided; power 0.8; MDE UNKNOWN; MCID NOT SET (owner decision).
 - Secondary: balanced accuracy, Brier score. Reported, not used to decide the claim.
 
 ## Model and run parameters

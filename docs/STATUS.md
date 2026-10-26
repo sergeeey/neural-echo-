@@ -38,7 +38,7 @@ Phase 1 — scientific knowledge foundation: **started, limited**. Mission and b
 
 ## Active experiment
 
-- `experiments/20261026-ne-exp-001-fusi-measurement-ceiling`: **PLANNED**, not frozen, not run. Protocol draft only.
+- `experiments/20261026-ne-exp-001-fusi-measurement-ceiling`: **PLANNED**, not frozen, not run. Independent scientific review (local commit 9398036): **BLOCKED**. Open freeze blockers, all still unresolved after the local fixes: (1) wheel-active threshold and minimum bout length, needs the data; (2) lag windows, needs the data; (3) model class; (4) MCID, owner decision; (5) baseline value for MDE, needs the data; (6) reference-region definition, needs the data. Fixed locally: mouse-level resampling, sign convention, paired design, motion-independent and session-mismatched controls, detectability line.
 
 ## Blockers (need the owner)
 

@@ -38,6 +38,9 @@ sources:
       README lists no speech, imagery or stimulus-category labels; spontaneous behaviour only.
       NOT downloaded. Download requires explicit owner approval.
       Labels were not verified inside the files (only the README and file list were read).
+      The deposit also holds compact files (Compact_data_regions_CR0xx, PSTHs_IBL.npz) whose
+      animals are not identified in the README. Their origin is UNVERIFIED; "5 mice" refers only
+      to the five BIDS subjects.
 
   - id: landemard2026-code
     title: "fusi_analyses (analysis code for the paper above)"

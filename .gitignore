@@ -34,6 +34,9 @@ data/processed/
 # Local agent/harness state (not project state; project state lives in docs/STATUS.md)
 .claude/
 
+# Owner's original brief; the tracked copy is docs/MISSION.md
+/ТЗ.txt
+
 # Generated local artifacts
 *.log
 reports/tmp/

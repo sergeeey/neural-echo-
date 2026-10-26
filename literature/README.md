@@ -1,6 +1,6 @@
 # Literature provenance
 
-`sources.yaml` holds only entries whose metadata has been checked against a primary source. It is empty on purpose: no citation may be written from memory.
+`sources.yaml` holds only entries whose metadata has been checked against a primary source. An entry is added only after its metadata is checked; no citation may be written from memory.
 
 ## Fields
 
