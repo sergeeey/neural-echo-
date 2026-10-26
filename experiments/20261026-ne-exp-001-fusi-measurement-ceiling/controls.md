@@ -1,10 +1,9 @@
 # Controls
 
-- **Negative controls:** wheel velocity permuted in 10 s blocks (pipeline check); chance baseline (run mean).
-- **Session-mismatched control (required):** fUS features from another run, paired with the target run's wheel velocity. Same feature count as the real model. The gain must vanish.
-- **Reference-region control (required, not yet possible):** the same model on a signal from outside the brain or from a large vessel. No such signal is verified in the archive. Until one is verified, this control is NOT AVAILABLE, and H0 is not excluded.
-- **Wheel-free nuisance:** eye movement and pupil size. Both are computed from eye camera data, not from wheel velocity.
-- **Whisking sensitivity:** whisking is reported as a sensitivity analysis only. Its definition includes wheel velocity, so it is not an independent control.
+- **Block-permuted wheel control (required):** wheel velocity permuted in 10 s blocks within each run, repeated many times. Defines the null distribution for the primary gain.
+- **Chance baseline:** predicting the training mean.
+- **Wheel-free nuisance:** eye movement and pupil size only. Whisking is excluded because its sidecar defines it from wheel velocity.
+- **Motion-independent reference (required for any neural reading, currently NOT AVAILABLE):** no verified signal is free of brain blood flow and body motion. A large-vessel signal is **not** a motion-free reference, because it carries real blood-flow changes. A registration-based motion regressor would be computed from the target images and is forbidden in this protocol. Options (each needs a decision before freezing): a motion estimate from the independent angiography scan, or a reference region validated against an external criterion.
+- **Session-specificity check:** not used as an H0 test. A session-mismatched wheel pairing removes motion artefact and real coupling alike, so it cannot separate them.
 - **Target-derivative check:** no regressor may be computed from the fUS target. Checked by code review before freezing.
-- **Known confounds:** wheel movement moves the body, eye and whiskers. The eye-and-pupil nuisance set does not remove all of it. Motion control is the open problem.
 - **Positive control:** none available in this dataset. Stated as a limitation.
