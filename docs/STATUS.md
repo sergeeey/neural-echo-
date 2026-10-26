@@ -8,7 +8,7 @@ Phase 0 — repository and reproducibility foundation (in progress). Phase 1 has
 
 ## Validated facts
 
-- FACT: Phase 0 gates pass locally and on a fresh clone of the committed state: `uv sync --locked --dev`, Ruff lint and format, Pyright, pytest (9 tests), `scripts/verify_repo.py` (exit 0). Evidence: command output in the session log.
+- FACT: Phase 0 gates pass locally and on a fresh clone of the committed state: `uv sync --locked --dev`, Ruff lint and format, Pyright, pytest, `scripts/verify_repo.py` (exit 0). The test count is not recorded here; run `uv run pytest` for the current number.
 - FACT: CI workflow exists (`.github/workflows/ci.yml`) but has NOT been observed running on GitHub.
 - No scientific facts are established by this repository yet.
 

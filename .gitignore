@@ -31,6 +31,9 @@ data/raw/
 data/interim/
 data/processed/
 
+# Local agent/harness state (not project state; project state lives in docs/STATUS.md)
+.claude/
+
 # Generated local artifacts
 *.log
 reports/tmp/
