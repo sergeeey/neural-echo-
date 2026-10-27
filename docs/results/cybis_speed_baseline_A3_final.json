@@ -1,0 +1,101 @@
+{
+  "stage": "F",
+  "label": "FINAL independent test on unused sessions",
+  "seed": 20261029,
+  "fit_sessions": [
+    "ses-20210407",
+    "ses-20210412",
+    "ses-20210421"
+  ],
+  "test": {
+    "train_sessions": [
+      "ses-20210407",
+      "ses-20210412",
+      "ses-20210421"
+    ],
+    "sync_lag_volumes": 1,
+    "selected": {
+      "M1": [
+        1000.0,
+        20
+      ],
+      "C5_alpha": 10000.0,
+      "C6_alpha": 10000.0
+    },
+    "inner_grid_M1": {
+      "k=10,alpha=0.1": -0.00514,
+      "k=10,alpha=1.0": -0.00508,
+      "k=10,alpha=10.0": -0.00459,
+      "k=10,alpha=100.0": -0.00245,
+      "k=10,alpha=1000.0": 0.00298,
+      "k=10,alpha=10000.0": 0.00335,
+      "k=20,alpha=0.1": -0.0202,
+      "k=20,alpha=1.0": -0.0195,
+      "k=20,alpha=10.0": -0.01413,
+      "k=20,alpha=100.0": 0.00059,
+      "k=20,alpha=1000.0": 0.01031,
+      "k=20,alpha=10000.0": 0.00714,
+      "k=50,alpha=0.1": -0.45836,
+      "k=50,alpha=1.0": -0.446,
+      "k=50,alpha=10.0": -0.37568,
+      "k=50,alpha=100.0": -0.21542,
+      "k=50,alpha=1000.0": -0.06066,
+      "k=50,alpha=10000.0": -0.00882
+    },
+    "inner_grid_C5": {
+      "k=10,alpha=0.1": -0.00857,
+      "k=10,alpha=1.0": -0.00857,
+      "k=10,alpha=10.0": -0.00853,
+      "k=10,alpha=100.0": -0.00818,
+      "k=10,alpha=1000.0": -0.00602,
+      "k=10,alpha=10000.0": -0.00366
+    },
+    "inner_grid_C6": {
+      "k=10,alpha=0.1": -0.00735,
+      "k=10,alpha=1.0": -0.00735,
+      "k=10,alpha=10.0": -0.0073,
+      "k=10,alpha=100.0": -0.00692,
+      "k=10,alpha=1000.0": -0.00565,
+      "k=10,alpha=10000.0": -0.004
+    },
+    "tests": [
+      {
+        "test_session": "ses-20210430",
+        "n_test": 1195,
+        "r2_M1": -0.0162,
+        "r2_M0": -0.0539,
+        "C1_z": 4.55,
+        "C1_shift_p": 0.002,
+        "C2_M1_minus_M0_block_CI": [
+          0.0029,
+          0.0629
+        ],
+        "C5_r2": -0.055,
+        "C6_r2": -0.0542,
+        "C5_matches_M1": false,
+        "C6_matches_M1": false,
+        "M1_beats_M0": true,
+        "C1_above_2": true
+      },
+      {
+        "test_session": "ses-20210505",
+        "n_test": 1195,
+        "r2_M1": -0.0138,
+        "r2_M0": -0.0452,
+        "C1_z": 2.71,
+        "C1_shift_p": 0.004,
+        "C2_M1_minus_M0_block_CI": [
+          0.0059,
+          0.0554
+        ],
+        "C5_r2": -0.0456,
+        "C6_r2": -0.0453,
+        "C5_matches_M1": false,
+        "C6_matches_M1": false,
+        "M1_beats_M0": true,
+        "C1_above_2": true
+      }
+    ]
+  },
+  "verdict": "PASS (decision rule met)"
+}
