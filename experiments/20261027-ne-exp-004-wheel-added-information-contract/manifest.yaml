@@ -18,11 +18,11 @@ code_provenance:
   repository: https://github.com/sergeeey/neural-echo-.git
   commit: null
   entrypoint: null             # to be set when the protocol is frozen
-random_seeds: [20261027]
+random_seeds: [20261027, 20261028]   # 20261027 synthetic series (blocks A and B); 20261028 block B bootstrap
 environment:
   lock_file: uv.lock
   lock_sha256: null
-outputs: []                    # none yet; binomial_flag_table.txt is a calculation of the C3-B rule, not a run output
+outputs: ["pilot_results.json", "pilot_summary.md", "pilot_log.txt"]   # diagnostic pilot, synthetic and development-wheel only; cpu 0.10 h
 protocol_amendments: ["A-1 (2026-10-27, before any result under this contract)"]
 calculations: ["binomial_flag_table.txt (scripts/binomial_flag_table.py)"]
 status: PLANNED

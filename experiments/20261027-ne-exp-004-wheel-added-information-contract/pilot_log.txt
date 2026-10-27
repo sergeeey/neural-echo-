@@ -1,0 +1,21 @@
+[A] held-out 2023-03-15: admissible=False cpu=77.4s
+[A] held-out 2023-03-20: admissible=False cpu=90.5s
+[A] held-out 2023-03-21: admissible=True cpu=101.0s
+[A] held-out 2023-03-23: admissible=False cpu=113.4s
+[A] held-out 2023-03-28: admissible=True cpu=125.8s
+[A] held-out 2023-03-30: admissible=False cpu=138.0s
+[A] oracle 2023-03-15 done cpu=141.1s
+[A] oracle 2023-03-20 done cpu=143.0s
+[A] oracle 2023-03-21 done cpu=146.5s
+[A] oracle 2023-03-23 done cpu=148.5s
+[A] oracle 2023-03-28 done cpu=150.4s
+[A] oracle 2023-03-30 done cpu=152.2s
+[B] 10/60 K=1 cpu=237.3s
+[B] 20/60 K=1 cpu=261.2s
+[B] 30/60 K=1 cpu=285.2s
+[B] 40/60 K=1 cpu=309.9s
+[B] 50/60 K=1 cpu=334.9s
+[B] 60/60 K=1 cpu=361.2s
+[B] K=1/60 outcome=NO GROSS INFLATION DETECTED
+cpu hours used: 0.1003 of 0.3 budget
+exit=0

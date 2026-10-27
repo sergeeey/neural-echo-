@@ -38,6 +38,7 @@ This file is the cross-session source of truth. Update it in the same commit as 
 
 - `experiments/20261027-ne-exp-004-wheel-added-information-contract`: **PLANNED**, not frozen, no result. Separates predictive value (Layer 1, estimable with caveats), conditional independence (Layer 2, NOT established) and causal interpretation (Layer 3, NOT estimable). Compares candidate A (two-component conditional generator) and candidate B (out-of-sample fixed-model comparison). Both **BLOCKED** for inference: A because its surrogates have not passed the structure criteria on the development runs, B because its decision rule is uncalibrated, and its C3-B check at 60 replicates has not been run. C3-B outcomes are INFLATION FLAG (K ≥ 8 of 60) or NO GROSS INFLATION DETECTED, and the second is not calibration. Amendment A-1 applied before any result. Descriptive per-date Δ with a date-level CI is the simpler framing. ID chosen because NE-EXP-003 is reserved by the mission and by an open owner question. Author query drafted in `author_query_draft.md`, **NOT sent**.
 - CRT v2 (NE-EXP-002) is closed as a completed negative methodological result, verdict REVISE; artifacts retained, criteria unchanged.
+- NE-EXP-004 diagnostic pilot (2026-10-27, CPU 0.10 of 0.3 h, synthetic and development-wheel only): candidate A **BLOCKED** (C1 admissible on 2 of 6 held-out dates; dominant failure is episode count, plus rest-length and amplitude mismatch). Candidate B: **NO GROSS INFLATION DETECTED** (K = 1 of 60; not calibration). Negative result: `null_results/20261027-ne-exp-004-candidates-ab-pilot.md`. Scientific verdict for the independent review: A BLOCKED, B descriptive-only.
 
 ## Blockers
 
@@ -48,6 +49,6 @@ This file is the cross-session source of truth. Update it in the same commit as 
 
 ## Next 3 actions
 
-1. Owner decision: approve or refuse the diagnostic pilot after READY (C1 for candidate A and C3-B for candidate B, about 0.3 CPU-hour synthetic, `experiments/20261027-ne-exp-004-…/controls.md` C5). No result of it can validate a candidate.
+1. Owner decision: whether to pursue the simplest discriminating test, the Layer 1 descriptive per-date Δ with date-level intervals and the wheel-rest versus wheel-active split. It needs a frozen protocol and owner approval for the real-signal run; the pilot's compute is already spent (0.10 CPU-h).
 2. Owner decision: whether to send the technical query on the wheel encoder to the dataset authors (`author_query_draft.md`, NOT sent; recipient to be verified from the dataset record). The origin of the exact zeros stays UNKNOWN until an answer or a specification is available.
 3. Independent review of NE-EXP-004 (protocol, controls, method comparison) before any freeze. Resolve the NE-EXP-002 vs NE-EXP-003 numbering (`docs/RESEARCH_BACKLOG.md` item 13).

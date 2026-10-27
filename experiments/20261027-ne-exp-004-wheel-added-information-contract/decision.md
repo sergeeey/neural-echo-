@@ -19,6 +19,14 @@ Neither status changes until these checks are run and the results are reviewed. 
 
 Layer 1 only, descriptive: per-date Δ_d and pooled Δ on the development runs, with a date-level bootstrap interval, plus the stratified check by wheel-rest vs wheel-active frames. It makes no p-value, conditional or causal claim and needs no new generator. This is the framing recommended for the next step.
 
+## Pilot result (2026-10-27; `pilot_results.json`, `pilot_summary.md`, `pilot_log.txt`)
+
+- Candidate A, C1: admissible for 2023-03-21 and 2023-03-28 only; **not admissible** for the other four held-out dates. Contract outcome: **BLOCKED**. The only failing C1 criterion is S3 (episode count); the rest-length and amplitude mismatches are diagnostics, not C1 criteria. The S3 margins are small for three of the four failing folds (0.3% to 1.2% over the limit for two of them) and large for two (fold 03-15: 260 against 228.1; fold 03-30: 102.5 against 76.6), so the verdict rests on the clear failures and on the contract's requirement of every date.
+- Candidate B, C3-B: K = 1 of 60 zero-effect replicates. Outcome: **NO GROSS INFLATION DETECTED**. This is not a demonstration of calibration.
+- CPU used: 0.10 of 0.3 CPU-hours (process time). No budget increase.
+- Negative result recorded in `null_results/20261027-ne-exp-004-candidates-ab-pilot.md`.
+- Verdict category for the independent review: A is BLOCKED on scientific grounds, B is descriptive-only, and engineering readiness is separate from validity.
+
 ## What this decision does not mean
 
 - It does not show that the wheel carries no predictive information about fUS.

@@ -39,7 +39,7 @@
 ## Model and run parameters
 
 - Model and hyperparameters: ridge regression, alpha 1.0, standardised features, Gaussian predictive variance from the training residuals; lags 0 to 6 s (21 lags, 0.3 s frames); edge rule: rows with frame index below 40 not scored; gap mask: 20 frames after onsets with gaps above 0.45 s.
-- Random seeds: 20261027 for all synthetic runs, as in NE-EXP-001/002.
+- Random seeds: 20261027 for synthetic series (blocks A and B), as in NE-EXP-001/002; 20261028 for the block B bootstrap.
 - Software environment (lock file hash): `uv.lock`; hash to be recorded at freeze.
 - Success criterion (copied from `claim.md`): see `claim.md`, including prerequisites P1 to P4.
 - Falsification criterion (copied from `claim.md`): see `claim.md`.
