@@ -76,4 +76,11 @@ The preprint (bioRxiv 10.1101/2025.07.15.663536) quotes maxima: intra-animal r²
 
 ## Amendments
 
+- **A-2 (2026-10-27, after the first result `0228f5d`, before any rerun; approved by the owner with conditions).** The first result is retained unchanged in `docs/results/cybis_speed_baseline.json`. A-2 defines a new, separate procedure; it does not overwrite the first.
+  1. **Alpha grid widened and log-spaced:** alpha in {1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7}. Reason: the first grid left every inner r² nearly unchanged across its range (see `0228f5d` review), so it did not test regularisation.
+  2. **Sync identified from training data only:** for each outer fold, the lag L* in [−3, +3] volumes maximising the absolute cross-correlation between speed and the mean z-scored fUS signal over the training sessions is chosen. Speed is then shifted by L* for the held-out session. The test session is not used to choose L*. Reason: the first sync check found no identifiable lag; this rule uses only training data.
+  3. **Motion-proxy control C6 (new):** predictor = the fUS frame-to-frame change magnitude of the mean z-scored signal, with lags 0 to 5, fitted by ridge on training sessions. If C6 matches M1 on held-out sessions, M1 is read as a motion proxy. Reason: the Doppler artefact confound was not separated.
+  4. **Decision rule unchanged** from the original protocol, applied to A-2 results. An A-2 pass does not turn the A-1 result into a pass.
+  5. **Still not done:** no holdout, no push, no merge, no email, no paid compute. The three sessions are the same.
+
 - **A-1 (2026-10-27, before any fit on raw data).** Correction of the Data section. The `mask-brain` weights volume was first described as a voxel mask; inspection showed it is the authors' decoder weights (values -4 to 7, 7678 of 14336 voxels non-zero). It is excluded. Voxel selection is replaced by finite values and non-zero temporal variance computed per session. No outcome, no split, no control, no decision rule is changed. The change is recorded here, not silently applied.
