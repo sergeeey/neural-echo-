@@ -28,7 +28,7 @@ No dataset was downloaded. Licence and signal content were checked against the l
 
 | Candidate | Source | Species | Behaviour/physio signals | Licence | Published decoding baseline | Status |
 |---|---|---|---|---|---|---|
-| `fetch_cybis_pereira_2026` (ConfUSIus) | https://confusius.tools/latest/user-guide/datasets/ | Rat | DeepLabCut videos; linear and angular speed (GLM derivatives). No wheel, pupil, whisking, or physio | Not stated | Not stated; `decode-speed` and `interanimal-decode-speed` derivatives are provided | Strongest lead: a behavioural label is present, but licence and baseline unconfirmed |
+| `fetch_cybis_pereira_2026` (ConfUSIus) | https://confusius.tools/latest/user-guide/datasets/ | Rat | DeepLabCut videos; linear and angular speed (GLM derivatives). No wheel, pupil, whisking, or physio | CC BY 4.0 (VERIFIED: Zenodo record 15476373 API, `license.id` = `cc-by-4.0`) | Authors' decoding outputs in `decode-speed` and `interanimal-decode-speed` derivatives; baseline metrics not yet confirmed from the paper | Strongest lead: licence confirmed; baseline definition still to be checked |
 | `fetch_nunez_elizalde_2022` (ConfUSIus) | same | Mouse | Not stated | Not stated | Not stated | Lead, low detail |
 | `fetch_landemard_2026` (ConfUSIus) | same | Mouse | Locomotion implied, no signal named | Not stated | Not stated | Same record as ALD002; does not resolve the timing question |
 | Griggs et al. 2023, NHP saccade/reach fUS | arXiv 2509.18507 (search result, not fetched) | Macaque | Movement direction as label | Not checked | Not checked | Lead only; repository not confirmed |
@@ -40,7 +40,7 @@ Source note: the ConfUSIus page fetch returned an automated warning about a comm
 ## Stage 4 — baseline status
 
 - ALD002: not run. Blocked by Stage 2.
-- Cybis Pereira 2026 (candidate): not run. Needs (a) licence confirmed per dataset, (b) download permission from the owner (downloading requires explicit approval), (c) a stated baseline definition. None is in place.
+- Cybis Pereira 2026 (candidate): licence confirmed CC BY 4.0 (Zenodo record 15476373, DOI 10.5281/zenodo.15476373). Download authorised by the owner's 2026-10-27 instruction; archive `dataset.zip` (11,653,544,308 bytes, md5 `43ce010b4557bc495829c6ef7edb68a1` per Zenodo metadata) is being fetched to git-ignored `data/raw/cybis_pereira_2026/`. Baseline definition still to be checked from the paper (DOI 10.1016/j.celrep.2025.116791).
 
 ## What this milestone does not establish
 
