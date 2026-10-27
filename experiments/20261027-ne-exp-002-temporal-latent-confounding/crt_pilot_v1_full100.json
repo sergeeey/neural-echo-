@@ -1,0 +1,162 @@
+{
+  "code_version": "04267d6",
+  "seed": 20261027,
+  "n_reps": 100,
+  "n_draws": 99,
+  "alpha": 0.05,
+  "data": "eligible development runs only; holdout excluded by name",
+  "primary_runs": [
+    "sub-ALD002_task-awake_acq-ref04",
+    "sub-ALD002_task-awake_acq-ref06_run-1",
+    "sub-ALD002_task-awake_acq-ref06_run-2",
+    "sub-ALD002_task-awake_acq-ref08",
+    "sub-ALD002_task-awake_acq-ref11",
+    "sub-ALD002_task-awake_acq-ref18",
+    "sub-ALD002_task-awake_acq-ref20_run-2",
+    "sub-ALD002_task-awake_acq-ref22"
+  ],
+  "excluded_mismatched": [
+    "sub-ALD002_task-awake_acq-ref02",
+    "sub-ALD002_task-awake_acq-ref10_run-1",
+    "sub-ALD002_task-awake_acq-ref12",
+    "sub-ALD002_task-awake_acq-ref14",
+    "sub-ALD002_task-awake_acq-ref20_run-1",
+    "sub-ALD002_task-awake_acq-ref23",
+    "sub-ALD002_task-awake_acq-ref24",
+    "sub-ALD002_task-awake_acq-ref27"
+  ],
+  "results": {
+    "zero_effect": {
+      "independent": {
+        "rejections": 4,
+        "rate": 0.04,
+        "wilson95": [
+          0.0157,
+          0.0984
+        ],
+        "mean_p": 0.5908000000000001,
+        "mean_q95_null": 0.0001876026850033488
+      },
+      "conditional": {
+        "rejections": 6,
+        "rate": 0.06,
+        "wilson95": [
+          0.0278,
+          0.1248
+        ],
+        "mean_p": 0.5891000000000001,
+        "mean_q95_null": 0.00019922658903656157
+      }
+    },
+    "ar_null_strong": {
+      "independent": {
+        "rejections": 5,
+        "rate": 0.05,
+        "wilson95": [
+          0.0215,
+          0.1118
+        ],
+        "mean_p": 0.5501999999999999,
+        "mean_q95_null": 0.0004020811326465541
+      },
+      "conditional": {
+        "rejections": 5,
+        "rate": 0.05,
+        "wilson95": [
+          0.0215,
+          0.1118
+        ],
+        "mean_p": 0.56,
+        "mean_q95_null": 0.0004136789965249487
+      }
+    },
+    "hidden_arousal": {
+      "independent": {
+        "rejections": 100,
+        "rate": 1.0,
+        "wilson95": [
+          0.963,
+          1.0
+        ],
+        "mean_p": 0.009999999999999998,
+        "mean_q95_null": -0.009751757984064077
+      },
+      "conditional": {
+        "rejections": 100,
+        "rate": 1.0,
+        "wilson95": [
+          0.963,
+          1.0
+        ],
+        "mean_p": 0.009999999999999998,
+        "mean_q95_null": -0.01012445897366387
+      }
+    },
+    "measured_arousal": {
+      "independent": {
+        "rejections": 16,
+        "rate": 0.16,
+        "wilson95": [
+          0.101,
+          0.2442
+        ],
+        "mean_p": 0.3006,
+        "mean_q95_null": -3.6008314370849846e-05
+      },
+      "conditional": {
+        "rejections": 4,
+        "rate": 0.04,
+        "wilson95": [
+          0.0157,
+          0.0984
+        ],
+        "mean_p": 0.507,
+        "mean_q95_null": 0.0001267396356063131
+      }
+    },
+    "lead_misalignment": {
+      "independent": {
+        "rejections": 100,
+        "rate": 1.0,
+        "wilson95": [
+          0.963,
+          1.0
+        ],
+        "mean_p": 0.009999999999999998,
+        "mean_q95_null": -0.012881429851163397
+      },
+      "conditional": {
+        "rejections": 100,
+        "rate": 1.0,
+        "wilson95": [
+          0.963,
+          1.0
+        ],
+        "mean_p": 0.009999999999999998,
+        "mean_q95_null": -0.01385632887146256
+      }
+    },
+    "known_added_info": {
+      "independent": {
+        "rejections": 100,
+        "rate": 1.0,
+        "wilson95": [
+          0.963,
+          1.0
+        ],
+        "mean_p": 0.009999999999999998,
+        "mean_q95_null": -0.016112917812091933
+      },
+      "conditional": {
+        "rejections": 100,
+        "rate": 1.0,
+        "wilson95": [
+          0.963,
+          1.0
+        ],
+        "mean_p": 0.009999999999999998,
+        "mean_q95_null": -0.01726756064381184
+      }
+    }
+  }
+}

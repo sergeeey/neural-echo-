@@ -1,0 +1,10 @@
+# Prediction comparison: synthetic calibration (20 replicates per scenario, no permutation)
+Script: scripts/check_prediction_comparison.py at commit 04267d6 plus the uncommitted scripts of this session; seed 31; no real fUS outcome used.
+Rule: exact two-sided sign test on six date-level signs; nominal alpha 0.05 (minimum achievable p is 0.031 with six dates, all signs equal).
+
+synthetic calibration, 20 replicates per scenario (no permutation):
+zero_effect: sign-test p<=0.05 in 4/20; mean pooled delta -0.00019
+hidden_arousal: sign-test p<=0.05 in 10/20; mean pooled delta 0.01331
+known_added_info: sign-test p<=0.05 in 13/20; mean pooled delta 0.02643
+
+Reading: zero_effect false-positive rate 4/20 (0.20) is above the nominal 0.05 at this replicate count; the sign rule does not separate a confound (hidden_arousal 10/20) from a real effect (known_added_info 13/20). Not a calibrated test.

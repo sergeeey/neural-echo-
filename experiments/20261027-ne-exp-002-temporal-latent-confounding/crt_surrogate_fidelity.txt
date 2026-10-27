@@ -1,0 +1,16 @@
+2023-03-15 obs active=0.105 ep=208 len=5.7 | cond active=1.000 ep=1 len=11274.0 varA=0.3094 varS=0.000013 corr=0.008 | ind active=0.105 ep=209 len=5.7
+   obs varA=2.3664 varS=0.000516 corr=-0.159
+2023-03-15 obs active=0.242 ep=268 len=7.5 | cond active=0.964 ep=11 len=721.5 varA=1.0995 varS=0.000008 corr=0.001 | ind active=0.244 ep=269 len=7.5
+   obs varA=3.4335 varS=0.000549 corr=-0.088
+2023-03-20 obs active=0.176 ep=170 len=11.5 | cond active=1.000 ep=1 len=11076.0 varA=2.7556 varS=0.000380 corr=-0.014 | ind active=0.180 ep=176 len=11.3
+   obs varA=8.6075 varS=0.002312 corr=0.139
+2023-03-21 obs active=0.095 ep=166 len=6.4 | cond active=1.000 ep=1 len=11264.0 varA=0.3569 varS=0.000011 corr=-0.002 | ind active=0.095 ep=167 len=6.4
+   obs varA=3.0718 varS=0.000231 corr=0.171
+2023-03-21 obs active=0.123 ep=113 len=12.2 | cond active=1.000 ep=1 len=11271.0 varA=2.2799 varS=0.000009 corr=-0.011 | ind active=0.123 ep=116 len=11.9
+   obs varA=8.7484 varS=0.000216 corr=0.101
+2023-03-23 obs active=0.117 ep=148 len=8.9 | cond active=1.000 ep=1 len=11224.0 varA=2.1470 varS=0.000155 corr=-0.016 | ind active=0.121 ep=152 len=9.0
+   obs varA=9.7617 varS=0.001877 corr=-0.024
+2023-03-28 obs active=0.091 ep=173 len=5.9 | cond active=0.998 ep=5 len=2250.2 varA=0.2736 varS=0.000000 corr=0.008 | ind active=0.091 ep=174 len=5.9
+   obs varA=2.3954 varS=0.046378 corr=0.353
+2023-03-30 obs active=0.149 ep=410 len=4.1 | cond active=1.000 ep=1 len=11230.0 varA=0.1284 varS=0.004761 corr=-0.025 | ind active=0.149 ep=413 len=4.0
+   obs varA=0.7419 varS=0.014556 corr=0.237

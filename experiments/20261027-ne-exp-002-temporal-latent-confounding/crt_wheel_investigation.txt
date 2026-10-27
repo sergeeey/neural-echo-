@@ -1,0 +1,44 @@
+== A. wheel stationarity
+2023-03-21 n=11307 exact-zero frac=0.905 zero-step frac=0.891 min=-0.3439 max=0.6579 uniq=1039 invalid=20
+2023-03-28 n=11309 exact-zero frac=0.910 zero-step frac=0.894 min=-0.3388 max=0.6237 uniq=992 invalid=0
+2023-03-30 n=11310 exact-zero frac=0.852 zero-step frac=0.816 min=-0.3908 max=0.6635 uniq=1497 invalid=20
+2023-03-21 n=11311 exact-zero frac=0.878 zero-step frac=0.868 min=-0.2198 max=0.9263 uniq=1368 invalid=0
+2023-03-20 n=11294 exact-zero frac=0.820 zero-step frac=0.804 min=-0.5216 max=0.8681 uniq=2011 invalid=98
+2023-03-15 n=11314 exact-zero frac=0.895 zero-step frac=0.877 min=-0.3863 max=0.6944 uniq=1143 invalid=0
+2023-03-23 n=11304 exact-zero frac=0.877 zero-step frac=0.864 min=-0.2902 max=0.9456 uniq=1360 invalid=20
+2023-03-15 n=8339 exact-zero frac=0.755 zero-step frac=0.723 min=-0.3376 max=0.8001 uniq=1954 invalid=0
+
+== B. residual variance: active vs stationary aligned frames
+2023-03-21 var_active=0.0252 var_stationary=0.0000 ratio=199357.73 frac_active=0.095
+2023-03-28 var_active=0.0207 var_stationary=0.0001 ratio=270.01 frac_active=0.091
+2023-03-30 var_active=0.0064 var_stationary=0.0000 ratio=224.63 frac_active=0.148
+2023-03-21 var_active=0.0711 var_stationary=0.0000 ratio=640158.89 frac_active=0.122
+2023-03-20 var_active=0.0561 var_stationary=0.0000 ratio=4711.91 frac_active=0.180
+2023-03-15 var_active=0.0212 var_stationary=0.0000 ratio=171584.60 frac_active=0.105
+2023-03-23 var_active=0.0683 var_stationary=0.0000 ratio=23625.40 frac_active=0.121
+2023-03-15 var_active=0.0328 var_stationary=0.0000 ratio=132286.77 frac_active=0.244
+
+== C. extreme block variance ratio, leave-one-run-out profile
+2023-03-21 block 7/28 len=403 var=7.940e-06 mean=-0.1723 wheel_nonzero=0.000 wheel_max=0
+2023-03-21 block 2/28 len=403 var=1.321e+00 mean=0.1952 wheel_nonzero=0.313 wheel_max=0.628
+2023-03-28 block 23/28 len=403 var=6.170e-04 mean=-0.1472 wheel_nonzero=0.005 wheel_max=0.03767
+2023-03-28 block 11/28 len=404 var=8.000e-01 mean=-0.0078 wheel_nonzero=0.089 wheel_max=0.6237
+2023-03-21 block 21/28 len=403 var=1.489e-05 mean=-0.2342 wheel_nonzero=0.000 wheel_max=0
+2023-03-21 block 17/28 len=403 var=5.987e+00 mean=0.9658 wheel_nonzero=0.305 wheel_max=0.9263
+2023-03-20 block 26/28 len=403 var=2.305e-03 mean=-0.2738 wheel_nonzero=0.012 wheel_max=0.04159
+2023-03-20 block 20/28 len=403 var=8.346e+00 mean=1.6517 wheel_nonzero=0.449 wheel_max=0.8487
+2023-03-15 block 11/28 len=404 var=5.188e-06 mean=-0.1728 wheel_nonzero=0.000 wheel_max=0
+2023-03-15 block 12/28 len=403 var=1.876e+00 mean=0.1964 wheel_nonzero=0.429 wheel_max=0.6305
+2023-03-23 block 18/28 len=403 var=4.902e-05 mean=-0.1925 wheel_nonzero=0.000 wheel_max=0
+2023-03-23 block 25/28 len=403 var=5.985e+00 mean=0.6101 wheel_nonzero=0.221 wheel_max=0.85
+
+== D. junction steps
+2023-03-21 max step/mean=84.48 at frame 9218 (junction frame 20) masked_at_max=0
+2023-03-28 max step/mean=67.37 at frame 6136 (junction frame 20) masked_at_max=0
+2023-03-30 max step/mean=83.33 at frame 3320 (junction frame 20) masked_at_max=0
+2023-03-21 max step/mean=44.34 at frame 271 (junction frame 20) masked_at_max=0
+2023-03-20 max step/mean=33.80 at frame 5725 (junction frame 20) masked_at_max=0
+2023-03-15 max step/mean=89.18 at frame 4957 (junction frame 20) masked_at_max=0
+2023-03-23 junction ratio=27.88 w[19:23]=[ 0.6274  0.336  -0.1313 -0.0744] mean_step=0.01676 largest_step_frame=4677 step=0.7668 masked_near_junction=0
+2023-03-23 max step/mean=45.75 at frame 4677 (junction frame 20) masked_at_max=0
+2023-03-15 max step/mean=22.94 at frame 5300 (junction frame 20) masked_at_max=0

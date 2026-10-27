@@ -1,6 +1,6 @@
 # STATUS
 
-Last meaningful update: 2026-10-27 (scientific pivot: predictive scope, negative result, pearl, NE-EXP-002 draft; local commits only; not pushed)
+Last meaningful update: 2026-10-27 (CRT v2 validation gate: REVISE, negative result recorded, provenance and alternatives assessed; local commits only; not pushed)
 
 This file is the cross-session source of truth. Update it in the same commit as any change that alters project state (see AGENTS.md § Session start and state updates). Commit identifiers are read from `git log`, not recorded here.
 
@@ -34,6 +34,7 @@ This file is the cross-session source of truth. Update it in the same commit as 
 
 - `experiments/20261026-ne-exp-001-fusi-measurement-ceiling`: **PLANNED**, not frozen, not run on the real signal. Classified EXPLORATORY. Preliminary synthetic controls recorded in `synthetic_controls_preliminary.md` (40 replicates, Wilson intervals). Verdict BLOCKED.
 - `experiments/20261027-ne-exp-002-temporal-latent-confounding`: **RUNNING**, synthetic stress test. Minimal set: no confounder 1/40, hidden arousal 39/40, measured arousal 1/40 (decision rule met: non-identifiability, not implementation). Eye-conditional null check: threshold about 21% higher than independent null; needs adequate replicates before freezing NE-EXP-001.
+- CRT v2 validation gate (2026-10-27): **REVISE**. No null inflation (largest conditional v2 null rejection 3/30), but the pre-registered diagnostics fail (quarter variance ratio 2.50 against 1.5; block variance ratio about 6.3e4 against 3). The conditional surrogate does not reproduce the activity state, episodes or physiology dependence. Negative result: `null_results/20261027-ne-exp-002-crt-v2-distribution.md`. Two alternatives assessed, neither validated: two-component generator (partial) and date-level prediction comparison (miscalibrated at 20 replicates). Provenance: `experiments/20261027-ne-exp-002-temporal-latent-confounding/crt_run_provenance.md`. A supplementary v1 run at 100 replicates completed (6 of 6 scenarios; `crt_pilot_v1_full100.json`, summary in `crt_v1_full100_summary.md`). Its loaded code is the pre-edge working tree, not exactly commit 04267d6. It does not change the verdict.
 
 ## Blockers
 
@@ -44,6 +45,6 @@ This file is the cross-session source of truth. Update it in the same commit as 
 
 ## Next 3 actions
 
-1. Decide, with the owner, whether the eye-conditional null replaces the independent null for NE-EXP-001 (threshold about 21% higher); test it with adequate replicates only after approval.
-2. Ask the owner for decisions 1–3 above; do not start a larger run without approval.
-3. Request a fresh independent review of the revised claim set and the negative result before any freeze.
+1. Owner decision: whether to pre-register a new surrogate contract version for the wheel (activity-state preserving, pre-registered before any run) or to restrict the question to predictive association only. No CRT v2 criterion changes.
+2. Establish the origin of the exact wheel zeros: encoder resolution and velocity derivation from the vendor or the dataset authors (currently UNKNOWN). Do not infer physiology from them.
+3. Obtain an independent review of the negative result and the alternatives before any freeze of NE-EXP-001 or any real-signal use.

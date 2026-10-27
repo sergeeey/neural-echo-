@@ -1,0 +1,28 @@
+2023-03-15 p01=0.020 p10=0.139 | active_frac: obs=0.1053 tc=0.1208 ind=0.1053 | episodes: obs=208 tc=195 ind=208 | mean_episode_len: obs=5.707 tc=7.061 ind=5.707 | resid_var_active: obs=2.366 tc=2.327 ind=2.38 | resid_var_stationary: obs=0.0005158 tc=0.0005061 ind=0.0005044 | corr_abs_resid_Zmag: obs=-0.1589 tc=0.003826 ind=-0.003515
+2023-03-15 p01=0.020 p10=0.139 | active_frac: obs=0.2418 tc=0.1254 ind=0.2418 | episodes: obs=268 tc=149 ind=268 | mean_episode_len: obs=7.489 tc=6.922 ind=7.489 | resid_var_active: obs=3.433 tc=3.373 ind=3.606 | resid_var_stationary: obs=0.0005491 tc=0.0005393 ind=0.0005451 | corr_abs_resid_Zmag: obs=-0.08817 tc=0.0194 ind=0.008437
+2023-03-20 p01=0.022 p10=0.153 | active_frac: obs=0.1758 tc=0.1293 ind=0.1758 | episodes: obs=170 tc=217 ind=173 | mean_episode_len: obs=11.45 tc=6.585 ind=11.25 | resid_var_active: obs=8.608 tc=9.111 ind=8.611 | resid_var_stationary: obs=0.002312 tc=0.002485 ind=0.002502 | corr_abs_resid_Zmag: obs=0.1393 tc=-0.01022 ind=-0.04834
+2023-03-21 p01=0.025 p10=0.149 | active_frac: obs=0.0949 tc=0.1461 ind=0.0949 | episodes: obs=166 tc=245 ind=167 | mean_episode_len: obs=6.44 tc=6.732 ind=6.401 | resid_var_active: obs=3.072 tc=3.07 ind=3.263 | resid_var_stationary: obs=0.0002307 tc=0.0002375 ind=0.0002392 | corr_abs_resid_Zmag: obs=0.1712 tc=0.005384 ind=-0.01153
+2023-03-21 p01=0.025 p10=0.149 | active_frac: obs=0.1225 tc=0.1489 ind=0.1225 | episodes: obs=113 tc=248 ind=116 | mean_episode_len: obs=12.22 tc=6.852 ind=11.91 | resid_var_active: obs=8.748 tc=8.742 ind=9.087 | resid_var_stationary: obs=0.0002158 tc=0.0002125 ind=0.0002118 | corr_abs_resid_Zmag: obs=0.1012 tc=0.009181 ind=-0.002249
+2023-03-23 p01=0.023 p10=0.146 | active_frac: obs=0.1174 tc=0.1403 ind=0.1174 | episodes: obs=148 tc=227 ind=151 | mean_episode_len: obs=8.905 tc=6.84 ind=8.728 | resid_var_active: obs=9.762 tc=9.773 ind=9.493 | resid_var_stationary: obs=0.001877 tc=0.001888 ind=0.001874 | corr_abs_resid_Zmag: obs=-0.02388 tc=0.01765 ind=0.04053
+2023-03-28 p01=0.023 p10=0.139 | active_frac: obs=0.09078 tc=0.1412 ind=0.09078 | episodes: obs=173 tc=221 ind=174 | mean_episode_len: obs=5.913 tc=7.184 ind=5.879 | resid_var_active: obs=2.395 tc=2.348 ind=2.342 | resid_var_stationary: obs=0.04638 tc=0.05373 ind=0.0529 | corr_abs_resid_Zmag: obs=0.3531 tc=0.2325 ind=0.2935
+2023-03-30 p01=0.019 p10=0.124 | active_frac: obs=0.1488 tc=0.1383 ind=0.1488 | episodes: obs=410 tc=189 ind=413 | mean_episode_len: obs=4.076 tc=8.047 ind=4.046 | resid_var_active: obs=0.7419 tc=0.7412 ind=0.7045 | resid_var_stationary: obs=0.01456 tc=0.01541 ind=0.01549 | corr_abs_resid_Zmag: obs=0.2374 tc=0.2246 ind=0.263
+
+median across runs:
+active_frac|independent 0.11998
+active_frac|obs 0.11998
+active_frac|two_component 0.13931
+corr_abs_resid_Zmag|independent 0.00309
+corr_abs_resid_Zmag|obs 0.12023
+corr_abs_resid_Zmag|two_component 0.01341
+episodes|independent 173.5
+episodes|obs 171.5
+episodes|two_component 219.0
+mean_episode_len|independent 6.945
+mean_episode_len|obs 6.96428
+mean_episode_len|two_component 6.88671
+resid_var_active|independent 3.43412
+resid_var_active|obs 3.25262
+resid_var_active|two_component 3.22124
+resid_var_stationary|independent 0.00121
+resid_var_stationary|obs 0.00121
+resid_var_stationary|two_component 0.00121

@@ -1,0 +1,8 @@
+zero_effect y v1 daaa1d3b33c0d703 v2 daaa1d3b33c0d703 | wheel v1 2640ec73cddc7d0e v2 2640ec73cddc7d0e match True
+ar_null_strong y v1 555fcde79be6891c v2 555fcde79be6891c | wheel v1 2640ec73cddc7d0e v2 2640ec73cddc7d0e match True
+hidden_arousal y v1 8a90d8b7a55db1d7 v2 8a90d8b7a55db1d7 | wheel v1 2640ec73cddc7d0e v2 2640ec73cddc7d0e match True
+measured_arousal y v1 ee7560511fef7e4e v2 ee7560511fef7e4e | wheel v1 2640ec73cddc7d0e v2 2640ec73cddc7d0e match True
+lead_misalignment y v1 fd6e2b446315a8f5 v2 fd6e2b446315a8f5 | wheel v1 2640ec73cddc7d0e v2 2640ec73cddc7d0e match True
+known_added_info y v1 67b867d4c8976336 v2 67b867d4c8976336 | wheel v1 2640ec73cddc7d0e v2 2640ec73cddc7d0e match True
+all synthetic series identical: True
+final RNG state identical: True
