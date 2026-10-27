@@ -42,7 +42,13 @@
 
 ## Null distribution
 
-- Block permutation of signed wheel velocity within each run, in 120 s blocks, 1000 permutations on the holdout procedure, seed 20261026.
+- **Formal null hypotheses (per held-out date d):**
+  - H0_cond: given Z (eye and pupil lags 0..6 s), the wheel adds no predictive information about the fUS signal on date d.
+  - H0_indep (comparator only): the wheel's block order carries no information about the fUS signal on date d.
+- **Primary procedure (proposed, supersedes the whole-run permutation above; PLANNED, not frozen):** fold-wise approximate conditional randomisation test (`src/neural_echo/crt.py`). Models (full, nuisance, and the conditional mean mu(Z) of wheel on Z) are fitted on TRAINING dates only. The held-out date's wheel is redrawn as mu(Z) + block-permuted residuals. The held-out fUS target never enters a null.
+- **Comparator (kept, not the primary):** independent block permutation of the held-out date's wheel without conditioning. It is reported beside the primary result on the same data.
+- **Approximation, stated:** residual block permutation approximates exchangeability within blocks. It is not an exact CRT. Measured residual autocorrelation time (wheel after conditioning on Z): median 11.8 frames, maximum 30.1 frames; 400–799-frame blocks are above 5 × the maximum.
+- Draws: 1000 for the frozen test (the pilot uses 99 for diagnostics). Seed 20261026.
 - Buffers: the 60 s buffer is **not** part of the primary leave-one-date-out procedure, because folds are whole runs and no training frame is adjacent to a held-out block. It applies only to a secondary within-run blocked evaluation, which is not run here.
 - Margin: observed Δ is compared with the 95th percentile of permuted Δ.
 - **Full detection rule (what a positive result means):** margin AND Δ > 0 on at least 5 of the 6 primary dates. Reports must give both parts.
