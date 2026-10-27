@@ -23,6 +23,6 @@ environment:
   lock_file: uv.lock
   lock_sha256: null
 outputs: ["pilot_results.json", "pilot_summary.md", "pilot_log.txt"]   # diagnostic pilot, synthetic and development-wheel only; cpu 0.10 h
-protocol_amendments: ["A-1 (2026-10-27, before any result under this contract)"]
-calculations: ["binomial_flag_table.txt (scripts/binomial_flag_table.py)"]
+protocol_amendments: ["A-1 (2026-10-27, proposed then ACCEPTED by the owner on 2026-10-27; see phase_b_protocol.md acceptance record)"]
+calculations: ["binomial_flag_table.txt (scripts/binomial_flag_table.py)", "timing_lattice.json, timing_stalls.json, timing_sources_inventory.json (read-only timing inspection)", "h8_delay_wheel.json (H8; wheel and stamps only; no fUS)"]
 status: PLANNED

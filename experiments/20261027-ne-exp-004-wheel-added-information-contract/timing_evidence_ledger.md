@@ -51,7 +51,7 @@ With a single period of 0.30013 s the endpoint residual is (per-run mean − 0.3
 | H4: long gap is whole missed volumes | gap 3.907 s | 13 periods, residual 0.005 s | SUPPORTED for ref04 |
 | H5: short gaps (0.45–0.5 s) are missed volumes | gaps 0.452, 0.457, 0.494 s | not whole multiples of 0.3 s; they sit in the upper tail of the same one-sided delay distribution (0.35–0.45 s in every run) | REJECTED as missed volumes; treated as delays (INFERRED) |
 | H7: delays are sporadic and one-sided on an exact 0.3 s tick | non-gap interval histogram (`timing_stalls.json`) | below-median share 0 to 0.0002; 12–20 intervals of 0.35–0.45 s per run; delay budget 1.0–1.7 s per run (an identity against the endpoint span; the evidence is the distribution) | SUPPORTED (inferred; to confirm with the authors) |
-| H8: delays co-occur with wheel activity | not yet tested (wheel-only check) | — | UNTESTED |
+| H8: delays co-occur with wheel activity | `scripts/check_h8_delay_wheel.py` → `h8_delay_wheel.json`; wheel |velocity| over delay intervals (0.31–0.45 s) against tick intervals (0.299–0.310 s); reference: 200 circular shifts of the wheel within each recording (seed 20261029); no fUS value used | Pooled observed difference +0.0043, reference 95% interval −0.0168 to +0.0142, two-sided p = 0.65. Per run p = 0.12 to 0.79. No association detected; 12–22 delay intervals per run, so the test is weakly powered. Not evidence of no association. Conditional on the stamps being on the physio clock (UNKNOWN). No causal conclusion | NOT DETECTED (weak power; conditional on UNKNOWN alignment) |
 | H6: the C-V2 failure is caused by an arbitrary offset | not tested; no free offset is fitted | — | NOT ASSESSED; no offset is assigned |
 
 ## 4. Alignment consequences
@@ -79,7 +79,7 @@ With a single period of 0.30013 s the endpoint residual is (per-run mean − 0.3
 
 - Proposed amendment A-1 (revised): **READY** from the independent review, final check. All five points of the final check were closed. Non-blocking wording points were corrected in the ledger (H1 and H7 now state the summed delay as an identity, and the count of 0.299 s intervals is four across three runs).
 - READY is a verdict on the reasoning and the wording. It is not acceptance. A-1 takes effect only when the owner records acceptance in a dated entry in `phase_b_protocol.md`.
-- Still UNKNOWN after the review: whether the stamps are acquisition times, the VolumeTiming convention, the physio–fUS clock offset, the encoder derivation; H8 (delays co-occur with wheel activity) is untested.
+- Still UNKNOWN after the review: whether the stamps are acquisition times, the VolumeTiming convention, the physio–fUS clock offset, the encoder derivation; H8 (delays co-occur with wheel activity) was tested on 2026-10-27 with the result in the H8 row of §3 (not detected; weak power; same-interval co-occurrence only, no lag tested; conditional on the UNKNOWN alignment).
 
 ## 7. What this ledger does not establish
 
