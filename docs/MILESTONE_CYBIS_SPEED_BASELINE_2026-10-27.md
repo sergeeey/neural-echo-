@@ -21,11 +21,28 @@ Reading:
 
 ## Caveats that limit the reading
 
-1. **Selection at the grid edge.** The pre-registered alpha grid tops out at 1000, and that value was selected in all three folds. The optimum may lie beyond it. Extending the grid is a protocol change and needs a dated amendment; it has not been made. The result therefore says "no signal at alpha ≤ 1000", not "no signal".
-2. **Sync is not established.** The descriptive check (`docs/results/cybis_speed_sync.json`) gives best lags of 1, 1 and −7 volumes (0.6 s, 0.6 s, −4.2 s), with |r| only 0.06–0.13. Lag −7 lies outside the expected 0–3 s haemodynamic range. The DLC time zero is assumed to match the first fUS volume, and that assumption is not confirmed (UNKNOWN).
+1. **The alpha grid is poorly scaled, so the result is weaker than a grid-edge statement suggests.** Alpha 1000 was selected in all three folds, but the inner r² for k = 10 moves only about 0.005 between alpha 1 and alpha 1000 (fold 1: −0.0903 to −0.0854). The PCs of 14336 z-scored voxels carry large variance, so every alpha in the grid is effectively unregularised. Every inner score is negative, so the selection picks the least bad option. The honest reading is: no positive out-of-session prediction was found with effectively unregularised linear fits on these PCs. The grid needs a much wider range (for example up to 1e7). Extending it is a protocol change and needs a dated amendment; it has not been made. This scaling point is INFERRED from the inner scores and has not been tested by running a wider grid.
+2. **Sync is not established, and no lag estimate is given.** The descriptive check (`docs/results/cybis_speed_sync.json`) gives a best |r| of 0.06–0.13 at lags 1, 1 and −7 volumes. In session 1 the lag-6 correlation (|r| ≈ 0.10) is about as large as the best lag (0.115), so no lag is identified: these peaks are at the level expected from autocorrelated series. The DLC time zero is assumed to match the first fUS volume, and that assumption is UNKNOWN.
 3. **The pipeline differs from the authors'.** This baseline uses per-session z-scored voxels, PCA, and lags of PCs. It does not use the authors' GLM-based lagged convolution, band-pass filter, white-matter regression, or voxel selection. It also defines speed independently from DLC body position, not from the authors' GLM speed regressor. Because of these differences, **this is a test of this simple baseline, not of the published claim.** It does not refute the paper.
 4. **Motion confound not addressed.** Body motion produces Doppler artefact. A positive result would have needed the C5 control to separate it. The result is negative, so this confound did not need to be resolved here.
 5. **One animal.** All three sessions are from sub-rat1703. No between-animal inference is made.
+
+## Independent review (fallback verifier)
+
+The reviewer agent was closed by its iteration cap (four non-LGTM verdicts; see the gate message). The documented fallback (`doubt-driven-development.md`, Independent Review Fallback Policy) was used: the `skeptic` agent, with fresh context. Its findings, checked against the files:
+
+- **Train/test separation: passes.** PCA, ridge centring, the mean predictor and the inner selection use training sessions only. Per-session z-scoring uses the held-out session's own statistics on features only. The protocol allows this.
+- **Lag alignment: passes by trace** (feature row i is time i+5; `y[LAGS:]` matches). A unit test with a synthetic `arange` input is still to be added.
+- **Metrics and nulls: pass.** r², the circular-block bootstrap and the shift range are correct.
+- **Recomputed numbers match the JSON.** The z values and M1 − M0 values match the stored outputs to rounding.
+- **Deviation C4:** the protocol says "training data only" for the sync check; the script ran on all three sessions. It is descriptive and nothing is fitted on it. Recorded here, not fixed.
+- **Deviation C5:** the baseline script uses the raw mean over voxels as the global signal, while the sync script uses the mean of z-scored voxels. The raw mean is scale-dependent, so C5 values (−0.03 to −0.0007) are uninformative. C5 does not affect the verdict, which already fails on conditions 1 and 2. Recorded here; a z-scored rerun is not done.
+- **Speed sampling:** speed is a point sample of the differenced 50 Hz position, not averaged over each 0.6 s volume. This is a choice the protocol does not specify; it adds jitter and lowers the achievable r². Recorded as a limitation.
+- **Overstatements corrected above** (grid scaling and sync lag). The review found them; they are fixed in this note.
+
+## Replication of the authors' method: blocked
+
+The authors' decoder (per the preprint) convolves voxels with time-reversed lagged t-statistics from their GLM. For sub-rat1703, session 20210407, the GLM derivative folder holds only the design matrix (`_dm.tsv`) and the events table (`_events.tsv`). No t-statistic maps are in the archive for this session. Whether the authors' GLM code is public is UNKNOWN (not checked), and the derivative README did not load (HTTP 504). So a closer replication cannot be built from the archive: the lag kernels are missing. This blocker is documented, not worked around.
 
 ## Comparison with the published values (not a reproduction)
 
