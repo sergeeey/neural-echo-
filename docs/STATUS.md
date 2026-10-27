@@ -17,7 +17,7 @@ This file is the cross-session source of truth. Update it in the same commit as 
 ## Data (verified, sub-ALD002 only)
 
 - Archive `data/raw/landemard2026/sub-ALD002.zip` (git-ignored); MD5 matches figshare; SHA-256 in the manifests.
-- 17 fUS runs over 9 dates. VolumeTiming: 8 runs have one extra onset (mechanism not established, excluded from primary). Frame period 0.30013 s, not 0.3 s.
+- 17 fUS runs over 9 dates. VolumeTiming: 8 runs have one extra onset (mechanism not established, excluded from primary). Frame period: the `_pwd.json` sidecar gives `FrameAcquisitionDuration` = 0.3 s and has no frame-period field; the quoted 0.30013 s has UNKNOWN provenance and is not confirmed (see `timing_evidence_ledger.md` §1, §3). Onset intervals sit on an exact 0.300 s tick with one-sided delays.
 - Whisking is documented as estimated from motion SVD **and wheel velocity**; excluded from the wheel-free set.
 - No motion-independent reference. Angiography is static. Compact `.npz` files are the authors' analyses; not used as inputs.
 
@@ -51,7 +51,6 @@ This file is the cross-session source of truth. Update it in the same commit as 
 ## Next 3 actions
 
 1. Owner decision on proposed amendment A-1 (revised) to `phase_b_protocol.md`: it withdraws the lattice exclusion and recommends the six-date primary set with a pre-specified sensitivity analysis. Independent review verdict: READY (a verdict on reasoning and wording, not acceptance; recorded in `timing_evidence_ledger.md` §6a). The owner must still record acceptance as a dated entry. No real-signal run is authorised.
-2. Owner decision: send the timing query to the UCL repository contact (`author_query_draft_timing.md`, NOT sent; confirm the address on the live record first).
-3. Timing evidence (`timing_evidence_ledger.md`, `timing_stalls.json`): onset intervals sit on an exact 0.300 s tick with one-sided delays (12–20 per run of 0.35–0.45 s; summed delay 1.0–1.7 s per run, equal to the endpoint excess). The frozen C-V2 period test is not a test of a true period. Whether the stamps are acquisition times, the VolumeTiming convention, the physio–fUS clock offset and the encoder derivation remain UNKNOWN.
-2. Owner decision: whether to send the technical query on the wheel encoder to the dataset authors (`author_query_draft.md`, NOT sent; recipient to be verified from the dataset record). The origin of the exact zeros stays UNKNOWN until an answer or a specification is available.
-3. Independent review of NE-EXP-004 (protocol, controls, method comparison) before any freeze. Resolve the NE-EXP-002 vs NE-EXP-003 numbering (`docs/RESEARCH_BACKLOG.md` item 13).
+2. Owner decision: send the timing query to the UCL repository contact (`author_query_draft_timing.md`, NOT sent; confirm the address on the live record first). Timing evidence (`timing_evidence_ledger.md`, `timing_stalls.json`): onset intervals sit on an exact 0.300 s tick with one-sided delays (12–20 per run of 0.35–0.45 s; summed delay 1.0–1.7 s per run). Whether the stamps are acquisition times, the VolumeTiming convention, the physio–fUS clock offset and the encoder derivation remain UNKNOWN.
+3. Owner decision: whether to send the technical query on the wheel encoder to the dataset authors (`author_query_draft.md`, NOT sent; recipient to be verified from the dataset record). The origin of the exact zeros stays UNKNOWN until an answer or a specification is available.
+4. Independent review of NE-EXP-004 (protocol, controls, method comparison) before any freeze. Resolve the NE-EXP-002 vs NE-EXP-003 numbering (`docs/RESEARCH_BACKLOG.md` item 13).
