@@ -1,0 +1,102 @@
+{
+  "amendment": "A-2",
+  "seed": 20261028,
+  "alphas": [
+    1.0,
+    10.0,
+    100.0,
+    1000.0,
+    10000.0,
+    100000.0,
+    1000000.0,
+    10000000.0
+  ],
+  "ks": [
+    10,
+    20,
+    50
+  ],
+  "folds": [
+    {
+      "test_session": "ses-20210407",
+      "train_sessions": [
+        "ses-20210412",
+        "ses-20210421"
+      ],
+      "sync_lag_volumes_train": 0,
+      "selected": {
+        "alpha": 10000.0,
+        "k": 20
+      },
+      "n_test": 1195,
+      "r2_M1_ridge": 0.0168,
+      "r2_M0_mean": -0.0064,
+      "C1_shift": {
+        "null_mean": -0.0319,
+        "z": 2.48,
+        "shift_p": 0.004
+      },
+      "C2_M1_minus_M0_block_CI_within_session": [
+        -0.0015,
+        0.0479
+      ],
+      "C5_global_zscore_r2": -0.0061,
+      "C6_motion_proxy_r2": -0.0064,
+      "C6_alpha": 10000000.0
+    },
+    {
+      "test_session": "ses-20210412",
+      "train_sessions": [
+        "ses-20210407",
+        "ses-20210421"
+      ],
+      "sync_lag_volumes_train": 1,
+      "selected": {
+        "alpha": 10000000.0,
+        "k": 50
+      },
+      "n_test": 1195,
+      "r2_M1_ridge": 0.004,
+      "r2_M0_mean": -0.0037,
+      "C1_shift": {
+        "null_mean": -0.006,
+        "z": 1.87,
+        "shift_p": 0.0379
+      },
+      "C2_M1_minus_M0_block_CI_within_session": [
+        -0.0003,
+        0.0143
+      ],
+      "C5_global_zscore_r2": -0.0037,
+      "C6_motion_proxy_r2": -0.0037,
+      "C6_alpha": 10000000.0
+    },
+    {
+      "test_session": "ses-20210421",
+      "train_sessions": [
+        "ses-20210407",
+        "ses-20210412"
+      ],
+      "sync_lag_volumes_train": 1,
+      "selected": {
+        "alpha": 100000.0,
+        "k": 20
+      },
+      "n_test": 1195,
+      "r2_M1_ridge": -0.0313,
+      "r2_M0_mean": -0.0005,
+      "C1_shift": {
+        "null_mean": -0.0423,
+        "z": 0.58,
+        "shift_p": 0.2695
+      },
+      "C2_M1_minus_M0_block_CI_within_session": [
+        -0.0906,
+        0.0063
+      ],
+      "C5_global_zscore_r2": -0.0007,
+      "C6_motion_proxy_r2": -0.0059,
+      "C6_alpha": 100.0
+    }
+  ]
+}
