@@ -1,0 +1,17 @@
+{
+  "seed": 20261027,
+  "summary": {
+    "independent": {
+      "mean_q95": 0.0003039473911762775,
+      "margin_false_positive_rate": 0.1,
+      "n_replicates": 10,
+      "n_permutations": 50
+    },
+    "conditional": {
+      "mean_q95": 0.0003677264695910828,
+      "margin_false_positive_rate": 0.0,
+      "n_replicates": 10,
+      "n_permutations": 50
+    }
+  }
+}

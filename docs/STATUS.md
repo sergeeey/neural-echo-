@@ -33,7 +33,7 @@ This file is the cross-session source of truth. Update it in the same commit as 
 ## Active experiments
 
 - `experiments/20261026-ne-exp-001-fusi-measurement-ceiling`: **PLANNED**, not frozen, not run on the real signal. Classified EXPLORATORY. Preliminary synthetic controls recorded in `synthetic_controls_preliminary.md` (40 replicates, Wilson intervals). Verdict BLOCKED.
-- `experiments/20261027-ne-exp-002-temporal-latent-confounding`: **PLANNED**, synthetic stress test. Minimal discriminating set (no confounder / hidden / measured arousal) run via `scripts/run_nex001_discriminate.py`.
+- `experiments/20261027-ne-exp-002-temporal-latent-confounding`: **RUNNING**, synthetic stress test. Minimal set: no confounder 1/40, hidden arousal 39/40, measured arousal 1/40 (decision rule met: non-identifiability, not implementation). Eye-conditional null check: threshold about 21% higher than independent null; needs adequate replicates before freezing NE-EXP-001.
 
 ## Blockers
 
@@ -44,6 +44,6 @@ This file is the cross-session source of truth. Update it in the same commit as 
 
 ## Next 3 actions
 
-1. Record the minimal discriminating set result (`experiments/20261026-ne-exp-001-fusi-measurement-ceiling/discriminate_results.json`) and read it against the decision rule in NE-EXP-002 decision.md.
+1. Decide, with the owner, whether the eye-conditional null replaces the independent null for NE-EXP-001 (threshold about 21% higher); test it with adequate replicates only after approval.
 2. Ask the owner for decisions 1–3 above; do not start a larger run without approval.
 3. Request a fresh independent review of the revised claim set and the negative result before any freeze.

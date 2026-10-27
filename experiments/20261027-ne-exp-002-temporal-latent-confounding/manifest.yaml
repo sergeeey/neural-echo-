@@ -23,4 +23,4 @@ environment:
   lock_file: uv.lock
   lock_sha256: null
 outputs: []
-status: PLANNED
+status: RUNNING

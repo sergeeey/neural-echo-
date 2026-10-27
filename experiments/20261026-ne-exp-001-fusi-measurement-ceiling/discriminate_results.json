@@ -1,0 +1,31 @@
+{
+  "seed": 20261027,
+  "data": "eligible development runs only (holdout excluded by name)",
+  "truth": "no wheel effect in any scenario",
+  "results": {
+    "null_no_confound": {
+      "role": "no confound, no effect",
+      "detection_rate_full_rule": 0.025,
+      "detected": 1,
+      "n_replicates": 40,
+      "n_permutations": 50,
+      "mean_delta": -0.00023316087830209327
+    },
+    "hidden_arousal": {
+      "role": "arousal correlated with wheel, not in design",
+      "detection_rate_full_rule": 0.975,
+      "detected": 39,
+      "n_replicates": 40,
+      "n_permutations": 50,
+      "mean_delta": 0.013422666750771282
+    },
+    "measured_arousal": {
+      "role": "same arousal, included in nuisance",
+      "detection_rate_full_rule": 0.025,
+      "detected": 1,
+      "n_replicates": 40,
+      "n_permutations": 50,
+      "mean_delta": -0.00022139314501823772
+    }
+  }
+}
