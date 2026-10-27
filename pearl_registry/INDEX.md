@@ -12,5 +12,4 @@ Each entry states:
 
 | ID | Date | Observation | Origin | Status |
 |---|---|---|---|---|
-
-_No entries yet._
+| NE-PEARL-001 | 2026-10-27 | Predictive success does not identify the mechanism (wheel-specific, temporal, hidden confound) | NE-EXP-001 synthetic controls | OPEN ([file](NE-PEARL-001.md)) |

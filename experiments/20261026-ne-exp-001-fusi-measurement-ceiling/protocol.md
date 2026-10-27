@@ -28,7 +28,7 @@
 
 ## Models
 
-- Predictor of interest: signed wheel velocity at lags 0 to 6 s (frame offsets), wheel leads the fUS signal.
+- Predictor of interest: signed wheel velocity at lags 0 to 6 s (frame offsets). The lag window is a modelling choice for prediction. It is NOT a claim that the wheel leads the fUS signal (temporal direction is not testable with this design; see claim.md, statement 2).
 - Wheel-free nuisance: eye movement and pupil size, same lags. Pupil is already normalised by the recording median (sidecar); no further normalisation is applied.
 - Ridge on standardised features. **alpha = 1.0, fixed.** Standardisation from training runs only.
 - Predictive distribution: Gaussian, mean from the model, variance = residual variance on training rows, separately per model.
@@ -70,6 +70,14 @@ The synthetic positive and negative controls (`scripts/run_nex001_controls.py`, 
 ## Estimand direction (fixed)
 
 - Target: fUS. Predictor: wheel velocity. The study is a **behaviour-to-fUS prediction audit** (no neural claim), not decoding of wheel activity. Wheel activity is not the target.
+- Only statement 1 of claim.md (predictive association) is under test. Statements 2 to 4 (temporal direction, wheel-specific contribution, mechanism) are not tested by this design.
+
+## Independence of runs (verified structure)
+
+- Runs share one animal: no between-animal independence exists in the primary analysis.
+- Runs within one calendar date share session conditions; 8 primary runs fall on 6 dates, so dates, not runs, are the unit of the consistency rule.
+- The holdout run shares its date (2023-03-30) with a development run (ref06_run-2). The holdout is therefore not independent of that development date. This is acknowledged, not corrected.
+- VolumeTiming convention is unverified (official fUSI-BIDS text not checked), so runs cannot be declared time-aligned beyond the recorded onsets.
 
 ## Detectability (estimand-ops rule)
 

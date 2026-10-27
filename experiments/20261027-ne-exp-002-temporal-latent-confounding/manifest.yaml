@@ -1,0 +1,26 @@
+# Experiment manifest. Fill all fields. Use null for unknown, never guess.
+experiment_id: 20261027-ne-exp-002-temporal-latent-confounding
+creation_date: "2026-10-27"
+git_commit: null               # commit that contains the frozen protocol
+classification: EXPLORATORY    # synthetic stress test only
+dataset:
+  name: "none (synthetic); behavioural inputs from sub-ALD002 development runs of NE-EXP-001"
+  version: null
+  source: null
+  licence: "CC BY-NC 4.0 for the behavioural inputs"
+  retrieved_at: "2026-10-26"
+  files:
+    - path: "data/raw/landemard2026/sub-ALD002.zip"
+      sha256: "56c445de19f3beca47f29e4d4a5db57e6411e1eaff2f6cccd80078da33cf48cd"
+      md5_figshare_match: "40ac3dd90ad155354390c4968cf973f4"
+      bytes: 5269296348
+code_provenance:
+  repository: https://github.com/sergeeey/neural-echo-.git
+  commit: null
+  entrypoint: scripts/run_nex001_discriminate.py
+random_seeds: [20261027]
+environment:
+  lock_file: uv.lock
+  lock_sha256: null
+outputs: []
+status: PLANNED
