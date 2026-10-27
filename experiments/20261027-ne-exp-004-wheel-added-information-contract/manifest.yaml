@@ -1,0 +1,28 @@
+# Experiment manifest. Fill all fields. Use null for unknown, never guess.
+experiment_id: 20261027-ne-exp-004-wheel-added-information-contract
+creation_date: "2026-10-27"
+git_commit: null               # commit that contains the frozen protocol (not frozen)
+classification: EXPLORATORY    # predictive scope only; synthetic controls; no real-signal run
+dataset:
+  name: "none for controls; behavioural inputs from sub-ALD002 development runs (same as NE-EXP-001/002)"
+  version: null
+  source: null
+  licence: "CC BY-NC 4.0 for the behavioural inputs"
+  retrieved_at: "2026-10-26"
+  files:
+    - path: "data/raw/landemard2026/sub-ALD002.zip"
+      sha256: "56c445de19f3beca47f29e4d4a5db57e6411e1eaff2f6cccd80078da33cf48cd"
+      md5_figshare_match: "40ac3dd90ad155354390c4968cf973f4"
+      bytes: 5269296348
+code_provenance:
+  repository: https://github.com/sergeeey/neural-echo-.git
+  commit: null
+  entrypoint: null             # to be set when the protocol is frozen
+random_seeds: [20261027]
+environment:
+  lock_file: uv.lock
+  lock_sha256: null
+outputs: []                    # none yet; binomial_flag_table.txt is a calculation of the C3-B rule, not a run output
+protocol_amendments: ["A-1 (2026-10-27, before any result under this contract)"]
+calculations: ["binomial_flag_table.txt (scripts/binomial_flag_table.py)"]
+status: PLANNED
