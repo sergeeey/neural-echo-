@@ -75,6 +75,12 @@ With a single period of 0.30013 s the endpoint residual is (per-run mean − 0.3
 - fUSI-BIDS specification: not retrieved in this session (search returned general BIDS examples only). Status: UNKNOWN.
 - Analysis repository `agneslandemard/fusi_analyses`: partially visible; no timing or encoder code found in the visible files. Status: UNKNOWN for the unseen modules.
 
+## 6a. Independent review verdict (recorded 2026-10-27)
+
+- Proposed amendment A-1 (revised): **READY** from the independent review, final check. All five points of the final check were closed. Non-blocking wording points were corrected in the ledger (H1 and H7 now state the summed delay as an identity, and the count of 0.299 s intervals is four across three runs).
+- READY is a verdict on the reasoning and the wording. It is not acceptance. A-1 takes effect only when the owner records acceptance in a dated entry in `phase_b_protocol.md`.
+- Still UNKNOWN after the review: whether the stamps are acquisition times, the VolumeTiming convention, the physio–fUS clock offset, the encoder derivation; H8 (delays co-occur with wheel activity) is untested.
+
 ## 7. What this ledger does not establish
 
 - It does not establish that the stamps are acquisition times rather than software times. The one-sided delay pattern is consistent with stamps that record delayed onsets; this is INFERRED and needs the authors' confirmation.
