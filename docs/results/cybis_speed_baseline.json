@@ -1,0 +1,128 @@
+{
+  "animal": "sub-rat1703",
+  "sessions": [
+    "ses-20210407",
+    "ses-20210412",
+    "ses-20210421"
+  ],
+  "lags": 5,
+  "folds": [
+    {
+      "test_session": "ses-20210407",
+      "train_sessions": [
+        "ses-20210412",
+        "ses-20210421"
+      ],
+      "selected": {
+        "alpha": 1000.0,
+        "k": 20
+      },
+      "inner_grid_mean_r2": {
+        "k=10,alpha=1.0": -0.0903,
+        "k=10,alpha=10.0": -0.0902,
+        "k=10,alpha=100.0": -0.0896,
+        "k=10,alpha=1000.0": -0.0854,
+        "k=20,alpha=1.0": -0.171,
+        "k=20,alpha=10.0": -0.1691,
+        "k=20,alpha=100.0": -0.1514,
+        "k=20,alpha=1000.0": -0.0699,
+        "k=50,alpha=1.0": -1.4629,
+        "k=50,alpha=10.0": -1.3501,
+        "k=50,alpha=100.0": -0.9306,
+        "k=50,alpha=1000.0": -0.4021
+      },
+      "n_test": 1195,
+      "r2_M1_ridge": 0.0122,
+      "r2_M0_mean": -0.0064,
+      "C1_shift": {
+        "null_mean": -0.0368,
+        "null_sd": 0.0211,
+        "z": 2.32,
+        "shift_p": 0.008
+      },
+      "C2_paired_diff_M1_minus_M0_block_CI": [
+        -0.0113,
+        0.046
+      ],
+      "C5_global_signal_r2": -0.0065
+    },
+    {
+      "test_session": "ses-20210412",
+      "train_sessions": [
+        "ses-20210407",
+        "ses-20210421"
+      ],
+      "selected": {
+        "alpha": 1000.0,
+        "k": 10
+      },
+      "inner_grid_mean_r2": {
+        "k=10,alpha=1.0": -0.0651,
+        "k=10,alpha=10.0": -0.0651,
+        "k=10,alpha=100.0": -0.0648,
+        "k=10,alpha=1000.0": -0.0626,
+        "k=20,alpha=1.0": -0.2572,
+        "k=20,alpha=10.0": -0.255,
+        "k=20,alpha=100.0": -0.2361,
+        "k=20,alpha=1000.0": -0.1616,
+        "k=50,alpha=1.0": -0.8516,
+        "k=50,alpha=10.0": -0.8394,
+        "k=50,alpha=100.0": -0.7456,
+        "k=50,alpha=1000.0": -0.4148
+      },
+      "n_test": 1195,
+      "r2_M1_ridge": 0.001,
+      "r2_M0_mean": -0.0035,
+      "C1_shift": {
+        "null_mean": -0.0318,
+        "null_sd": 0.0169,
+        "z": 1.95,
+        "shift_p": 0.018
+      },
+      "C2_paired_diff_M1_minus_M0_block_CI": [
+        -0.0365,
+        0.0332
+      ],
+      "C5_global_signal_r2": -0.0296
+    },
+    {
+      "test_session": "ses-20210421",
+      "train_sessions": [
+        "ses-20210407",
+        "ses-20210412"
+      ],
+      "selected": {
+        "alpha": 1000.0,
+        "k": 10
+      },
+      "inner_grid_mean_r2": {
+        "k=10,alpha=1.0": -0.0315,
+        "k=10,alpha=10.0": -0.0314,
+        "k=10,alpha=100.0": -0.0302,
+        "k=10,alpha=1000.0": -0.0213,
+        "k=20,alpha=1.0": -0.2426,
+        "k=20,alpha=10.0": -0.2386,
+        "k=20,alpha=100.0": -0.2055,
+        "k=20,alpha=1000.0": -0.0946,
+        "k=50,alpha=1.0": -1.8986,
+        "k=50,alpha=10.0": -1.6609,
+        "k=50,alpha=100.0": -0.8591,
+        "k=50,alpha=1000.0": -0.2381
+      },
+      "n_test": 1195,
+      "r2_M1_ridge": -0.0368,
+      "r2_M0_mean": -0.0006,
+      "C1_shift": {
+        "null_mean": -0.031,
+        "null_sd": 0.0178,
+        "z": -0.33,
+        "shift_p": 0.6168
+      },
+      "C2_paired_diff_M1_minus_M0_block_CI": [
+        -0.0926,
+        -0.0037
+      ],
+      "C5_global_signal_r2": -0.0007
+    }
+  ]
+}

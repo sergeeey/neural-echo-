@@ -24,7 +24,8 @@ What this does NOT mean:
 
 ## Data (fixed)
 
-- fUS: `rawdata/sub-rat1703/ses-<s>/fus/*_pwd.nii.gz` (power Doppler NIfTI). Brain mask: the `mask-brain` weights volume shipped in `derivatives/decode-speed/sub-rat1703/`, used only as a voxel mask.
+- fUS: `rawdata/sub-rat1703/ses-<s>/fus/*_pwd.nii.gz` (power Doppler NIfTI). Voxel selection: finite values and non-zero temporal variance within the session, computed from that session's data only. No external mask.
+- The file `derivatives/decode-speed/sub-rat1703/*mask-brain*_weights.nii` is NOT a brain mask. It holds values from -4 to 7 with about half the voxels non-zero, consistent with the authors' trained decoder weights. It is not used anywhere in this analysis, because the authors fitted it on all sessions including the test session.
 - Frame times: `VolumeTiming` in the `_pwd.json` sidecar (regular, 0.6006 s steps in the first session checked).
 - Motion: `rawdata/.../motion/*_tracksys-DLC_motion.tsv` (50 Hz, body_x, body_y in cm; likelihood columns present but not used for filtering in the baseline; see Controls).
 - Checksums: `data/raw/cybis_pereira_2026/MANIFEST_rawdata.sha256.tsv` (git-ignored) with SHA-256 per file.
@@ -75,4 +76,4 @@ The preprint (bioRxiv 10.1101/2025.07.15.663536) quotes maxima: intra-animal r²
 
 ## Amendments
 
-None yet.
+- **A-1 (2026-10-27, before any fit on raw data).** Correction of the Data section. The `mask-brain` weights volume was first described as a voxel mask; inspection showed it is the authors' decoder weights (values -4 to 7, 7678 of 14336 voxels non-zero). It is excluded. Voxel selection is replaced by finite values and non-zero temporal variance computed per session. No outcome, no split, no control, no decision rule is changed. The change is recorded here, not silently applied.
